@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>水浒108将 - 卡通交互图鉴</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
+<style>
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+body {
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+background: linear-gradient(135deg, #1a2a3a 0%, #0d1520 100%);
+color: #f0e6d2;
+min-height: 100vh;
+overflow-x: hidden;
+}
+
+.container {
+max-width: 1400px;
+margin: 0 auto;
+padding: 20px;
+}
+
+/* 标题样式 */
+header {
+text-align: center;
+margin-bottom: 40px;
+padding-top: 20px;
+position: relative;
+}
+
+h1 {
+font-family: 'Ma Shan Zheng', cursive;
+font-size: 3.5rem;
+color: #ffcc00;
+text-shadow: 3px 3px 0 #8b0000, 5px 5px 10px rgba(0, 0, 0, 0.7);
+margin-bottom: 10px;
+letter-spacing: 3px;
+}
+
+.subtitle {
+font-family: 'ZCOOL QingKe HuangYou', sans-serif;
+font-size: 1.5rem;
+color: #c9b37e;
+margin-bottom: 20px;
+}
+
+/* 控制栏样式 */
+.controls {
+display: flex;
+justify-content: center;
+flex-wrap: wrap;
+gap: 15px;
+margin-bottom: 30px;
+background: rgba(25, 40, 60, 0.8);
+padding: 15px;
+border-radius: 15px;
+box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.filter-group, .search-box {
+display: flex;
+align-items: center;
+gap: 10px;
+}
+
+.filter-btn {
+background: linear-gradient(to bottom, #3a6187, #1e3c5f);
+border: none;
+border-radius: 50px;
+color: #f0e6d2;
+padding: 10px 20px;
+font-size: 1rem;
+cursor: pointer;
+transition: all 0.3s ease;
+display: flex;
+align-items: center;
+gap: 8px;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.filter-btn:hover {
+background: linear-gradient(to bottom, #4a7197, #2e4c6f);
+transform: translateY(-3px);
+box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+}
+
+.filter-btn.active {
+background: linear-gradient(to bottom, #ff9900, #cc6600);
+color: #1a1a1a;
+}
+
+.search-box input {
+padding: 10px 15px;
+border-radius: 50px;
+border: 2px solid #3a6187;
+background: rgba(255, 255, 255, 0.1);
+color: #f0e6d2;
+font-size: 1rem;
+width: 250px;
+transition: all 0.3s ease;
+}
+
+.search-box input:focus {
+outline: none;
+border-color: #ff9900;
+box-shadow: 0 0 10px rgba(255, 153, 0, 0.5);
+}
+
+/* 卡片网格布局 */
+.characters-grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+gap: 25px;
+margin-bottom: 50px;
+min-height: 500px;
+}
+
+.character-card {
+background: linear-gradient(145deg, #2a3a4a, #1a2a3a);
+border-radius: 15px;
+overflow: hidden;
+box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+cursor: pointer;
+position: relative;
+animation: fadeInUp 0.5s ease forwards;
+opacity: 0;
+}
+
+.character-card:hover {
+transform: translateY(-10px) scale(1.03);
+box-shadow: 0 15px 25px rgba(0, 0, 0, 0.5);
+z-index: 10;
+}
+
+.card-header {
+padding: 15px;
+background: rgba(0, 0, 0, 0.3);
+display: flex;
+align-items: center;
+gap: 15px;
+}
+
+.character-avatar {
+width: 80px;
+height: 80px;
+border-radius: 50%;
+border: 3px solid #ffcc00;
+background: #0d1520;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 2.5rem;
+overflow: hidden;
+flex-shrink: 0;
+}
+
+.character-name {
+font-family: 'Ma Shan Zheng', cursive;
+font-size: 1.6rem;
+color: #ffcc00;
+}
+
+.character-nickname {
+font-size: 0.9rem;
+color: #c9b37e;
+margin-top: 5px;
+}
+
+.character-rank {
+position: absolute;
+top: 10px;
+right: 10px;
+background: #8b0000;
+color: #ffcc00;
+width: 40px;
+height: 40px;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+font-weight: bold;
+font-size: 1.2rem;
+box-shadow: 0 3px 5px rgba(0, 0, 0, 0.5);
+}
+
+.card-content {
+padding: 15px;
+}
+
+.character-stats {
+display: flex;
+justify-content: space-around;
+margin-bottom: 15px;
+background: rgba(0, 0, 0, 0.2);
+border-radius: 10px;
+padding: 10px;
+}
+
+.stat-item {
+text-align: center;
+}
+
+.stat-value {
+font-size: 1.5rem;
+font-weight: bold;
+color: #ff9900;
+}
+
+.stat-label {
+font-size: 0.8rem;
+color: #a0a0a0;
+}
+
+.character-desc {
+font-size: 0.9rem;
+line-height: 1.5;
+color: #d0d0d0;
+height: 80px;
+overflow: hidden;
+text-overflow: ellipsis;
+display: -webkit-box;
+-webkit-line-clamp: 4;
+-webkit-box-orient: vertical;
+}
+
+/* 详情面板 */
+.detail-panel {
+position: fixed;
+top: 0;
+right: -500px;
+width: 450px;
+height: 100vh;
+background: linear-gradient(145deg, #1a2a3a, #0d1520);
+box-shadow: -5px 0 25px rgba(0, 0, 0, 0.7);
+transition: right 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+z-index: 1000;
+overflow-y: auto;
+padding: 30px;
+}
+
+.detail-panel.active {
+right: 0;
+}
+
+.close-btn {
+position: absolute;
+top: 20px;
+right: 20px;
+background: #8b0000;
+color: #ffcc00;
+width: 40px;
+height: 40px;
+border-radius: 50%;
+border: none;
+font-size: 1.5rem;
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+transform: rotate(90deg);
+background: #ff0000;
+}
+
+.detail-content {
+margin-top: 30px;
+}
+
+.detail-avatar {
+width: 150px;
+height: 150px;
+border-radius: 50%;
+border: 5px solid #ffcc00;
+margin: 0 auto 20px;
+background: #0d1520;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 4.5rem;
+overflow: hidden;
+}
+
+.detail-name {
+font-family: 'Ma Shan Zheng', cursive;
+font-size: 2.5rem;
+color: #ffcc00;
+text-align: center;
+margin-bottom: 10px;
+}
+
+.detail-nickname {
+font-size: 1.3rem;
+color: #c9b37e;
+text-align: center;
+margin-bottom: 20px;
+}
+
+.detail-info {
+background: rgba(255, 255, 255, 0.05);
+border-radius: 10px;
+padding: 20px;
+margin-bottom: 20px;
+}
+
+.info-row {
+display: flex;
+margin-bottom: 15px;
+padding-bottom: 10px;
+border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.info-label {
+font-weight: bold;
+color: #ff9900;
+width: 100px;
+flex-shrink: 0;
+}
+
+.info-value {
+flex-grow: 1;
+color: #e0e0e0;
+}
+
+.detail-story {
+line-height: 1.6;
+color: #d0d0d0;
+margin-top: 20px;
+}
+
+/* 底部信息 */
+footer {
+text-align: center;
+padding: 20px;
+color: #a0a0a0;
+font-size: 0.9rem;
+border-top: 1px solid rgba(255, 255, 255, 0.1);
+margin-top: 20px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+.container {
+padding: 10px;
+}
+
+h1 {
+font-size: 2.5rem;
+}
+
+.subtitle {
+font-size: 1.2rem;
+}
+
+.characters-grid {
+grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+gap: 15px;
+}
+
+.detail-panel {
+width: 100%;
+right: -100%;
+}
+
+.controls {
+flex-direction: column;
+align-items: center;
+}
+
+.search-box input {
+width: 100%;
+}
+}
+
+/* 动画效果 */
+@keyframes fadeInUp {
+from {
+opacity: 0;
+transform: translateY(20px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+width: 8px;
+}
+
+::-webkit-scrollbar-track {
+background: rgba(0, 0, 0, 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+background: #ff9900;
+border-radius: 4px;
+}
+
+/* 星光背景效果 */
+.stars {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+pointer-events: none;
+z-index: -1;
+}
+
+.star {
+position: absolute;
+background-color: white;
+border-radius: 50%;
+animation: twinkle 5s infinite;
+}
+
+@keyframes twinkle {
+0%, 100% { opacity: 0.2; }
+50% { opacity: 1; }
+}
+
+.empty-state {
+text-align: center;
+padding: 60px 20px;
+grid-column: 1 / -1;
+}
+
+.empty-state i {
+font-size: 4rem;
+color: #ff9900;
+margin-bottom: 20px;
+}
+
+.empty-state h3 {
+font-size: 2rem;
+color: #ffcc00;
+margin-bottom: 10px;
+}
+
+.counter {
+text-align: center;
+margin: 20px 0;
+font-size: 1.2rem;
+color: #ffcc00;
+}
+
+.counter span {
+background: #8b0000;
+padding: 5px 15px;
+border-radius: 20px;
+margin: 0 10px;
+}
+</style>
+</head>
+<body>
+<!-- 星光背景 -->
+<div class="stars" id="stars"></div>
+
+<div class="container">
+<header>
+<h1>水浒108将</h1>
+<div class="subtitle">梁山好汉卡通交互图鉴</div>
+</header>
+
+<div class="counter">
+已展示 <span id="count">10</span> 位好汉，共 <span>108</span> 位
+</div>
+
+<div class="controls">
+<div class="filter-group">
+<button class="filter-btn active" data-filter="all">
+<i class="fas fa-users"></i> 全部好汉
+</button>
+<button class="filter-btn" data-filter="tiangang">
+<i class="fas fa-crown"></i> 天罡星 (36)
+</button>
+<button class="filter-btn" data-filter="dishai">
+<i class="fas fa-gem"></i> 地煞星 (72)
+</button>
+<button class="filter-btn" data-filter="favorite">
+<i class="fas fa-star"></i> 收藏好汉
+</button>
+</div>
+
+<div class="search-box">
+<i class="fas fa-search"></i>
+<input type="text" id="searchInput" placeholder="搜索好汉姓名或绰号...">
+</div>
+</div>
+
+<div class="characters-grid" id="charactersGrid">
+<!-- 人物卡片将通过JavaScript动态生成 -->
+</div>
+
+<footer>
+<p>© 2023 水浒108将交互图鉴 | 本页面为展示作品，数据来源于《水浒传》</p>
+<p>设计：卡通风格交互式网页 | 共收录108位梁山好汉信息</p>
+</footer>
+</div>
+
+<!-- 详情面板 -->
+<div class="detail-panel" id="detailPanel">
+<button class="close-btn" id="closeDetail">
+<i class="fas fa-times"></i>
+</button>
+<div class="detail-content" id="detailContent">
+<!-- 详情内容将通过JavaScript动态生成 -->
+</div>
+</div>
+
+<script>
+// 水浒108将完整数据
+const characters = [
+// 天罡星36员
+{id: 1, name: "宋江", nickname: "及时雨", rank: "天魁星", avatar: "👑", strength: 72, intelligence: 90, leadership: 98, loyalty: 95, category: "tiangang", weapon: "朴刀、宝剑", birth: "山东郓城", story: "梁山泊总兵都头领，原为郓城县押司，仗义疏财，人称'及时雨'。", favorite: false},
+{id: 2, name: "卢俊义", nickname: "玉麒麟", rank: "天罡星", avatar: "🦄", strength: 97, intelligence: 85, leadership: 90, loyalty: 92, category: "tiangang", weapon: "麒麟黄金矛", birth: "北京大名府", story: "梁山泊副总兵都头领，棍棒天下无双，河北三绝之一。", favorite: false},
+{id: 3, name: "吴用", nickname: "智多星", rank: "天机星", avatar: "🎓", strength: 62, intelligence: 98, leadership: 88, loyalty: 90, category: "tiangang", weapon: "铜链、羽扇", birth: "山东郓城", story: "梁山泊掌管机密军师，足智多谋，曾智取生辰纲。", favorite: false},
+{id: 4, name: "公孙胜", nickname: "入云龙", rank: "天闲星", avatar: "🐉", strength: 80, intelligence: 92, leadership: 75, loyalty: 85, category: "tiangang", weapon: "松纹古铜剑", birth: "蓟州", story: "梁山泊掌管机密军师，道术高深，能呼风唤雨。", favorite: false},
+{id: 5, name: "关胜", nickname: "大刀", rank: "天勇星", avatar: "⚔️", strength: 95, intelligence: 80, leadership: 85, loyalty: 90, category: "tiangang", weapon: "青龙偃月刀", birth: "蒲东", story: "梁山泊马军五虎将之首，关羽后人，使青龙偃月刀。", favorite: false},
+{id: 6, name: "林冲", nickname: "豹子头", rank: "天雄星", avatar: "🐆", strength: 94, intelligence: 82, leadership: 88, loyalty: 92, category: "tiangang", weapon: "丈八蛇矛", birth: "东京", story: "梁山泊马军五虎将，原为八十万禁军教头，被逼上梁山。", favorite: true},
+{id: 7, name: "秦明", nickname: "霹雳火", rank: "天猛星", avatar: "🔥", strength: 92, intelligence: 70, leadership: 80, loyalty: 85, category: "tiangang", weapon: "狼牙棒", birth: "山后开州", story: "梁山泊马军五虎将，性如烈火，使狼牙棒。", favorite: false},
+{id: 8, name: "呼延灼", nickname: "双鞭", rank: "天威星", avatar: "⚡", strength: 93, intelligence: 78, leadership: 84, loyalty: 88, category: "tiangang", weapon: "双鞭", birth: "河东", story: "梁山泊马军五虎将，呼延赞后人，使双鞭。", favorite: false},
+{id: 9, name: "花荣", nickname: "小李广", rank: "天英星", avatar: "🏹", strength: 85, intelligence: 80, leadership: 78, loyalty: 95, category: "tiangang", weapon: "弓箭、银枪", birth: "青州", story: "梁山泊马军八骠骑，箭法高超，百步穿杨。", favorite: false},
+{id: 10, name: "柴进", nickname: "小旋风", rank: "天贵星", avatar: "🌀", strength: 75, intelligence: 85, leadership: 80, loyalty: 90, category: "tiangang", weapon: "长枪", birth: "沧州", story: "后周世宗柴荣嫡派子孙，仗义疏财，喜结交英雄。", favorite: false},
+{id: 11, name: "李应", nickname: "扑天雕", rank: "天富星", avatar: "🦅", strength: 88, intelligence: 82, leadership: 80, loyalty: 85, category: "tiangang", weapon: "浑铁点钢枪", birth: "郓州", story: "独龙岗李家庄庄主，飞刀绝技，后被逼上梁山。", favorite: false},
+{id: 12, name: "朱仝", nickname: "美髯公", rank: "天满星", avatar: "🧔", strength: 86, intelligence: 78, leadership: 76, loyalty: 92, category: "tiangang", weapon: "大刀", birth: "郓城", story: "原为郓城县马兵都头，面如重枣，目若朗星。", favorite: false},
+{id: 13, name: "鲁智深", nickname: "花和尚", rank: "天孤星", avatar: "🪷", strength: 96, intelligence: 70, leadership: 75, loyalty: 98, category: "tiangang", weapon: "水磨禅杖", birth: "渭州", story: "梁山泊步军头领，原名鲁达，三拳打死镇关西。", favorite: true},
+{id: 14, name: "武松", nickname: "行者", rank: "天伤星", avatar: "🐅", strength: 98, intelligence: 75, leadership: 70, loyalty: 95, category: "tiangang", weapon: "戒刀", birth: "清河县", story: "梁山泊步军头领，景阳冈打虎英雄，为兄报仇杀西门庆。", favorite: true},
+{id: 15, name: "董平", nickname: "双枪将", rank: "天立星", avatar: "🔫", strength: 94, intelligence: 75, leadership: 80, loyalty: 82, category: "tiangang", weapon: "双枪", birth: "上党", story: "梁山泊马军五虎将，英勇双枪将，风流万户侯。", favorite: false},
+{id: 16, name: "张清", nickname: "没羽箭", rank: "天捷星", avatar: "💎", strength: 85, intelligence: 78, leadership: 76, loyalty: 88, category: "tiangang", weapon: "飞石", birth: "彰德府", story: "梁山泊马军八骠骑，善用飞石打人，百发百中。", favorite: false},
+{id: 17, name: "杨志", nickname: "青面兽", rank: "天暗星", avatar: "🎭", strength: 90, intelligence: 80, leadership: 78, loyalty: 85, category: "tiangang", weapon: "朴刀", birth: "关西", story: "杨家将后人，因脸上有青记得名，曾押运生辰纲。", favorite: false},
+{id: 18, name: "徐宁", nickname: "金枪手", rank: "天佑星", avatar: "🔱", strength: 88, intelligence: 82, leadership: 76, loyalty: 90, category: "tiangang", weapon: "钩镰枪", birth: "东京", story: "梁山泊马军八骠骑，金枪法、钩镰枪法天下独步。", favorite: false},
+{id: 19, name: "索超", nickname: "急先锋", rank: "天速星", avatar: "⚡", strength: 89, intelligence: 70, leadership: 75, loyalty: 88, category: "tiangang", weapon: "金蘸斧", birth: "大名府", story: "梁山泊马军八骠骑，性急如火，每逢战斗必争先。", favorite: false},
+{id: 20, name: "戴宗", nickname: "神行太保", rank: "天速星", avatar: "👟", strength: 70, intelligence: 85, leadership: 72, loyalty: 92, category: "tiangang", weapon: "无", birth: "江州", story: "梁山泊总探声息头领，日行八百里，善神行法。", favorite: false},
+{id: 21, name: "刘唐", nickname: "赤发鬼", rank: "天异星", avatar: "👹", strength: 87, intelligence: 68, leadership: 70, loyalty: 90, category: "tiangang", weapon: "朴刀", birth: "东潞州", story: "梁山泊步军头领，因鬓边有朱砂记得名。", favorite: false},
+{id: 22, name: "李逵", nickname: "黑旋风", rank: "天杀星", avatar: "⚫", strength: 94, intelligence: 50, leadership: 60, loyalty: 99, category: "tiangang", weapon: "双斧", birth: "沂州", story: "梁山泊步军头领，鲁莽直率，使双斧，对宋江忠心耿耿。", favorite: false},
+{id: 23, name: "史进", nickname: "九纹龙", rank: "天微星", avatar: "🐉", strength: 88, intelligence: 72, leadership: 74, loyalty: 90, category: "tiangang", weapon: "三尖两刃刀", birth: "华州", story: "梁山泊马军八骠骑，因身上纹有九条青龙得名。", favorite: false},
+{id: 24, name: "穆弘", nickname: "没遮拦", rank: "天究星", avatar: "🛡️", strength: 86, intelligence: 70, leadership: 72, loyalty: 88, category: "tiangang", weapon: "朴刀", birth: "揭阳镇", story: "梁山泊马军八骠骑，揭阳镇一霸，武艺高强。", favorite: false},
+{id: 25, name: "雷横", nickname: "插翅虎", rank: "天退星", avatar: "🐯", strength: 87, intelligence: 68, leadership: 70, loyalty: 85, category: "tiangang", weapon: "朴刀", birth: "郓城", story: "梁山泊步军头领，原为郓城县步兵都头。", favorite: false},
+{id: 26, name: "李俊", nickname: "混江龙", rank: "天寿星", avatar: "🐲", strength: 85, intelligence: 82, leadership: 84, loyalty: 90, category: "tiangang", weapon: "短刀", birth: "庐州", story: "梁山泊水军头领，精通水性，后成为暹罗国王。", favorite: false},
+{id: 27, name: "阮小二", nickname: "立地太岁", rank: "天剑星", avatar: "🗡️", strength: 84, intelligence: 75, leadership: 78, loyalty: 92, category: "tiangang", weapon: "短刀", birth: "济州", story: "梁山泊水军头领，阮氏三雄老大，石碣村渔民。", favorite: false},
+{id: 28, name: "张横", nickname: "船火儿", rank: "天平星", avatar: "🚤", strength: 83, intelligence: 72, leadership: 74, loyalty: 88, category: "tiangang", weapon: "短刀", birth: "江州", story: "梁山泊水军头领，浔阳江上劫财的船公。", favorite: false},
+{id: 29, name: "阮小五", nickname: "短命二郎", rank: "天罪星", avatar: "⚓", strength: 85, intelligence: 70, leadership: 76, loyalty: 90, category: "tiangang", weapon: "短刀", birth: "济州", story: "梁山泊水军头领，阮氏三雄老二，勇猛过人。", favorite: false},
+{id: 30, name: "张顺", nickname: "浪里白条", rank: "天损星", avatar: "🌊", strength: 82, intelligence: 78, leadership: 76, loyalty: 92, category: "tiangang", weapon: "短刀", birth: "江州", story: "梁山泊水军头领，张横弟弟，水下功夫了得。", favorite: false},
+{id: 31, name: "阮小七", nickname: "活阎罗", rank: "天败星", avatar: "☠️", strength: 86, intelligence: 68, leadership: 74, loyalty: 90, category: "tiangang", weapon: "短刀", birth: "济州", story: "梁山泊水军头领，阮氏三雄老三，性情刚烈。", favorite: false},
+{id: 32, name: "杨雄", nickname: "病关索", rank: "天牢星", avatar: "🏮", strength: 87, intelligence: 75, leadership: 74, loyalty: 88, category: "tiangang", weapon: "朴刀", birth: "河南", story: "梁山泊步军头领，原为蓟州押狱兼行刑刽子手。", favorite: false},
+{id: 33, name: "石秀", nickname: "拼命三郎", rank: "天慧星", avatar: "💪", strength: 88, intelligence: 78, leadership: 72, loyalty: 92, category: "tiangang", weapon: "棍棒", birth: "金陵", story: "梁山泊步军头领，为人仗义，好打抱不平。", favorite: false},
+{id: 34, name: "解珍", nickname: "两头蛇", rank: "天暴星", avatar: "🐍", strength: 85, intelligence: 70, leadership: 72, loyalty: 90, category: "tiangang", weapon: "钢叉", birth: "登州", story: "梁山泊步军头领，猎户出身，与解宝是兄弟。", favorite: false},
+{id: 35, name: "解宝", nickname: "双尾蝎", rank: "天哭星", avatar: "🦂", strength: 86, intelligence: 68, leadership: 70, loyalty: 92, category: "tiangang", weapon: "钢叉", birth: "登州", story: "梁山泊步军头领，猎户出身，解珍弟弟。", favorite: false},
+{id: 36, name: "燕青", nickname: "浪子", rank: "天巧星", avatar: "🎭", strength: 84, intelligence: 88, leadership: 78, loyalty: 95, category: "tiangang", weapon: "弩箭", birth: "北京", story: "卢俊义家仆，多才多艺，弩箭、相扑、吹弹唱舞样样精通。", favorite: true},
+
+// 地煞星72员（部分示例）
+{id: 37, name: "朱武", nickname: "神机军师", rank: "地魁星", avatar: "🎲", strength: 68, intelligence: 90, leadership: 82, loyalty: 88, category: "dishai", weapon: "双刀", birth: "定远", story: "梁山泊副军师，精通阵法，神机妙算。", favorite: false},
+{id: 38, name: "黄信", nickname: "镇三山", rank: "地煞星", avatar: "🏔️", strength: 82, intelligence: 72, leadership: 76, loyalty: 85, category: "dishai", weapon: "丧门剑", birth: "青州", story: "秦明徒弟，原为青州兵马都监。", favorite: false},
+{id: 39, name: "孙立", nickname: "病尉迟", rank: "地勇星", avatar: "🛡️", strength: 88, intelligence: 78, leadership: 80, loyalty: 85, category: "dishai", weapon: "长枪", birth: "琼州", story: "原为登州兵马提辖，武艺高强。", favorite: false},
+{id: 40, name: "宣赞", nickname: "丑郡马", rank: "地杰星", avatar: "👹", strength: 84, intelligence: 70, leadership: 74, loyalty: 88, category: "dishai", weapon: "钢刀", birth: "东京", story: "相貌丑陋，郡主丈夫，善使连珠箭。", favorite: false},
+{id: 41, name: "郝思文", nickname: "井木犴", rank: "地雄星", avatar: "🐺", strength: 85, intelligence: 75, leadership: 76, loyalty: 86, category: "dishai", weapon: "长枪", birth: "关胜结义兄弟", story: "关胜结义兄弟，十八般武艺样样精通。", favorite: false},
+{id: 42, name: "韩滔", nickname: "百胜将", rank: "地威星", avatar: "🏆", strength: 83, intelligence: 72, leadership: 75, loyalty: 85, category: "dishai", weapon: "枣木槊", birth: "东京", story: "原为陈州团练使，使枣木槊。", favorite: false},
+{id: 43, name: "彭玘", nickname: "天目将", rank: "地英星", avatar: "👁️", strength: 82, intelligence: 70, leadership: 74, loyalty: 84, category: "dishai", weapon: "三尖两刃刀", birth: "东京", story: "原为颍州团练使，与韩滔一起征讨梁山。", favorite: false},
+{id: 44, name: "单廷珪", nickname: "圣水将", rank: "地奇星", avatar: "💧", strength: 81, intelligence: 75, leadership: 76, loyalty: 85, category: "dishai", weapon: "长枪", birth: "凌州", story: "善用水攻，与魏定国合称'水火二将'。", favorite: false},
+{id: 45, name: "魏定国", nickname: "神火将", rank: "地猛星", avatar: "🔥", strength: 82, intelligence: 74, leadership: 77, loyalty: 86, category: "dishai", weapon: "熟铜刀", birth: "凌州", story: "善用火攻，与单廷珪合称'水火二将'。", favorite: false},
+{id: 46, name: "萧让", nickname: "圣手书生", rank: "地文星", avatar: "✍️", strength: 60, intelligence: 88, leadership: 68, loyalty: 90, category: "dishai", weapon: "无", birth: "济州", story: "书法大家，能模仿各家字迹。", favorite: false},
+{id: 47, name: "裴宣", nickname: "铁面孔目", rank: "地正星", avatar: "⚖️", strength: 65, intelligence: 85, leadership: 70, loyalty: 92, category: "dishai", weapon: "双剑", birth: "京兆府", story: "原为六案孔目，为人正直，铁面无私。", favorite: false},
+{id: 48, name: "欧鹏", nickname: "摩云金翅", rank: "地阔星", avatar: "🦅", strength: 83, intelligence: 70, leadership: 74, loyalty: 86, category: "dishai", weapon: "铁枪", birth: "黄州", story: "军户出身，行走如飞，人称'摩云金翅'。", favorite: false},
+{id: 49, name: "邓飞", nickname: "火眼狻猊", rank: "地阖星", avatar: "🦁", strength: 84, intelligence: 68, leadership: 72, loyalty: 88, category: "dishai", weapon: "铁链", birth: "襄阳府", story: "因双眼红赤得名，善使铁链。", favorite: false},
+{id: 50, name: "燕顺", nickname: "锦毛虎", rank: "地强星", avatar: "🐯", strength: 82, intelligence: 66, leadership: 70, loyalty: 85, category: "dishai", weapon: "朴刀", birth: "莱州", story: "原为清风山大寨主，因生得赤发黄须得名。", favorite: false},
+{id: 51, name: "杨林", nickname: "锦豹子", rank: "地暗星", avatar: "🐆", strength: 80, intelligence: 72, leadership: 70, loyalty: 88, category: "dishai", weapon: "长枪", birth: "彰德府", story: "原为绿林好汉，后投奔梁山。", favorite: false},
+{id: 52, name: "凌振", nickname: "轰天雷", rank: "地轴星", avatar: "💣", strength: 70, intelligence: 85, leadership: 72, loyalty: 90, category: "dishai", weapon: "火炮", birth: "燕陵", story: "火炮专家，能造各种火炮，号称'宋朝天下第一炮手'。", favorite: false},
+{id: 53, name: "蒋敬", nickname: "神算子", rank: "地会星", avatar: "🧮", strength: 62, intelligence: 88, leadership: 68, loyalty: 90, category: "dishai", weapon: "无", birth: "潭州", story: "原为落科举子，精通书算，能'积万累千，纤毫不差'。", favorite: false},
+{id: 54, name: "吕方", nickname: "小温侯", rank: "地佐星", avatar: "🔱", strength: 83, intelligence: 70, leadership: 72, loyalty: 88, category: "dishai", weapon: "方天画戟", birth: "潭州", story: "因崇拜吕布而学使方天画戟，人称'小温侯'。", favorite: false},
+{id: 55, name: "郭盛", nickname: "赛仁贵", rank: "地佑星", avatar: "🏹", strength: 82, intelligence: 68, leadership: 70, loyalty: 86, category: "dishai", weapon: "方天戟", birth: "西川嘉陵", story: "因崇拜薛仁贵而学使方天画戟，与吕方是搭档。", favorite: false},
+{id: 56, name: "安道全", nickname: "神医", rank: "地灵星", avatar: "💊", strength: 58, intelligence: 90, leadership: 65, loyalty: 92, category: "dishai", weapon: "无", birth: "建康府", story: "神医，曾治愈宋江背疮，医术高明。", favorite: false},
+{id: 57, name: "皇甫端", nickname: "紫髯伯", rank: "地兽星", avatar: "🐎", strength: 65, intelligence: 82, leadership: 70, loyalty: 90, category: "dishai", weapon: "无", birth: "幽州", story: "兽医，善医马匹，因生得碧眼黄须得名。", favorite: false},
+{id: 58, name: "王英", nickname: "矮脚虎", rank: "地微星", avatar: "🐯", strength: 78, intelligence: 60, leadership: 65, loyalty: 80, category: "dishai", weapon: "长枪", birth: "两淮", story: "因身材矮小得名，原为清风山二寨主，好色但勇猛。", favorite: false},
+{id: 59, name: "扈三娘", nickname: "一丈青", rank: "地慧星", avatar: "🌸", strength: 86, intelligence: 75, leadership: 78, loyalty: 88, category: "dishai", weapon: "日月双刀", birth: "扈家庄", story: "梁山三位女将之一，武艺高强，使日月双刀，后嫁王英。", favorite: true},
+{id: 60, name: "鲍旭", nickname: "丧门神", rank: "地暴星", avatar: "☠️", strength: 87, intelligence: 62, leadership: 70, loyalty: 85, category: "dishai", weapon: "阔剑", birth: "寇州", story: "原为枯树山强人，生性凶悍，嗜杀成性。", favorite: false},
+{id: 61, name: "樊瑞", nickname: "混世魔王", rank: "地然星", avatar: "👹", strength: 82, intelligence: 85, leadership: 78, loyalty: 86, category: "dishai", weapon: "流星锤", birth: "濮州", story: "原为芒砀山寨主，精通法术，善使流星锤。", favorite: false},
+{id: 62, name: "孔明", nickname: "毛头星", rank: "地猖星", avatar: "⭐", strength: 80, intelligence: 70, leadership: 72, loyalty: 88, category: "dishai", weapon: "长枪", birth: "青州", story: "孔亮兄长，白虎山富户，因与同乡财主争财杀人逃亡。", favorite: false},
+{id: 63, name: "孔亮", nickname: "独火星", rank: "地狂星", avatar: "🔥", strength: 78, intelligence: 68, leadership: 70, loyalty: 86, category: "dishai", weapon: "长枪", birth: "青州", story: "孔明弟弟，与兄长一起上白虎山落草。", favorite: false},
+{id: 64, name: "项充", nickname: "八臂哪吒", rank: "地飞星", avatar: "🌀", strength: 83, intelligence: 72, leadership: 74, loyalty: 88, category: "dishai", weapon: "团牌、标枪", birth: "徐州沛县", story: "原为芒砀山副将，善使团牌、标枪，武艺高强。", favorite: false},
+{id: 65, name: "李衮", nickname: "飞天大圣", rank: "地走星", avatar: "🦇", strength: 82, intelligence: 70, leadership: 73, loyalty: 87, category: "dishai", weapon: "团牌、标枪", birth: "邳县", story: "原为芒砀山副将，与项充搭档，善使团牌、标枪。", favorite: false},
+{id: 66, name: "金大坚", nickname: "玉臂匠", rank: "地巧星", avatar: "🛠️", strength: 65, intelligence: 82, leadership: 68, loyalty: 90, category: "dishai", weapon: "无", birth: "济州", story: "金石雕刻家，善刻碑文、印章。", favorite: false},
+{id: 67, name: "马麟", nickname: "铁笛仙", rank: "地明星", avatar: "🎵", strength: 79, intelligence: 72, leadership: 70, loyalty: 88, category: "dishai", weapon: "大滚刀", birth: "建康府", story: "善吹铁笛，武艺不错，原为黄门山强人。", favorite: false},
+{id: 68, name: "童威", nickname: "出洞蛟", rank: "地进星", avatar: "🐉", strength: 78, intelligence: 70, leadership: 72, loyalty: 90, category: "dishai", weapon: "短刀", birth: "浔阳江", story: "李俊心腹，精通水性，善驾船。", favorite: false},
+{id: 69, name: "童猛", nickname: "翻江蜃", rank: "地退星", avatar: "🐚", strength: 77, intelligence: 68, leadership: 70, loyalty: 92, category: "dishai", weapon: "短刀", birth: "浔阳江", story: "童威弟弟，水性极好，与哥哥同为李俊心腹。", favorite: false},
+{id: 70, name: "孟康", nickname: "玉幡竿", rank: "地满星", avatar: "🚢", strength: 75, intelligence: 78, leadership: 72, loyalty: 90, category: "dishai", weapon: "无", birth: "真定州", story: "造船专家，因身材修长、皮肤白皙得名。", favorite: false},
+{id: 71, name: "侯健", nickname: "通臂猿", rank: "地遂星", avatar: "🦍", strength: 72, intelligence: 75, leadership: 68, loyalty: 88, category: "dishai", weapon: "针线", birth: "洪都", story: "裁缝，飞针走线，技艺高超，江湖人称'通臂猿'。", favorite: false},
+{id: 72, name: "陈达", nickname: "跳涧虎", rank: "地周星", avatar: "🐯", strength: 81, intelligence: 68, leadership: 72, loyalty: 86, category: "dishai", weapon: "长枪", birth: "邺城", story: "少华山三头领之一，因能跳过涧溪得名。", favorite: false},
+{id: 73, name: "杨春", nickname: "白花蛇", rank: "地隐星", avatar: "🐍", strength: 80, intelligence: 70, leadership: 71, loyalty: 88, category: "dishai", weapon: "大杆刀", birth: "解良", story: "少华山三头领之一，因行动敏捷如蛇得名。", favorite: false},
+{id: 74, name: "郑天寿", nickname: "白面郎君", rank: "地异星", avatar: "👱", strength: 79, intelligence: 70, leadership: 70, loyalty: 85, category: "dishai", weapon: "长枪", birth: "苏州", story: "原为清风山三寨主，因生得白净俊俏得名。", favorite: false},
+{id: 75, name: "陶宗旺", nickname: "九尾龟", rank: "地理星", avatar: "🐢", strength: 84, intelligence: 68, leadership: 72, loyalty: 90, category: "dishai", weapon: "铁锹", birth: "光州", story: "庄户出身，力大无比，善用铁锹。", favorite: false},
+{id: 76, name: "宋清", nickname: "铁扇子", rank: "地俊星", avatar: "🌬️", strength: 60, intelligence: 75, leadership: 65, loyalty: 95, category: "dishai", weapon: "无", birth: "郓城", story: "宋江弟弟，负责梁山宴席事宜。", favorite: false},
+{id: 77, name: "乐和", nickname: "铁叫子", rank: "地乐星", avatar: "🎤", strength: 65, intelligence: 80, leadership: 68, loyalty: 90, category: "dishai", weapon: "无", birth: "茅州", story: "聪明伶俐，各种乐曲一学便会，又有一副好嗓音。", favorite: false},
+{id: 78, name: "龚旺", nickname: "花项虎", rank: "地捷星", avatar: "🐯", strength: 81, intelligence: 66, leadership: 70, loyalty: 86, category: "dishai", weapon: "飞枪", birth: "东昌府", story: "浑身刺有虎斑，脖子上刺着虎头，善使飞枪。", favorite: false},
+{id: 79, name: "丁得孙", nickname: "中箭虎", rank: "地速星", avatar: "🐅", strength: 82, intelligence: 65, leadership: 71, loyalty: 85, category: "dishai", weapon: "飞叉", birth: "东昌府", story: "面颊连项都有疤痕，善使飞叉。", favorite: false},
+{id: 80, name: "穆春", nickname: "小遮拦", rank: "地镇星", avatar: "🛡️", strength: 76, intelligence: 68, leadership: 69, loyalty: 88, category: "dishai", weapon: "朴刀", birth: "揭阳镇", story: "穆弘弟弟，原为揭阳镇一霸，武艺不及哥哥。", favorite: false},
+{id: 81, name: "曹正", nickname: "操刀鬼", rank: "地羁星", avatar: "🔪", strength: 78, intelligence: 72, leadership: 70, loyalty: 90, category: "dishai", weapon: "屠刀", birth: "开封府", story: "屠户出身，林冲徒弟，善屠宰牲口。", favorite: false},
+{id: 82, name: "宋万", nickname: "云里金刚", rank: "地魔星", avatar: "👹", strength: 80, intelligence: 65, leadership: 72, loyalty: 88, category: "dishai", weapon: "长枪", birth: "梁山", story: "梁山早期头领之一，因身材高大得名。", favorite: false},
+{id: 83, name: "杜迁", nickname: "摸着天", rank: "地妖星", avatar: "☁️", strength: 79, intelligence: 64, leadership: 71, loyalty: 89, category: "dishai", weapon: "长枪", birth: "梁山", story: "梁山早期头领之一，因身材高大得名。", favorite: false},
+{id: 84, name: "薛永", nickname: "病大虫", rank: "地幽星", avatar: "🐅", strength: 78, intelligence: 70, leadership: 69, loyalty: 88, category: "dishai", weapon: "枪棒", birth: "河南洛阳", story: "江湖卖艺人，因祖父军官得罪同僚被牵连。", favorite: false},
+{id: 85, name: "施恩", nickname: "金眼彪", rank: "地伏星", avatar: "🐯", strength: 77, intelligence: 72, leadership: 70, loyalty: 90, category: "dishai", weapon: "无", birth: "孟州", story: "孟州牢城管营之子，曾开快活林酒店，与武松交好。", favorite: false},
+{id: 86, name: "李忠", nickname: "打虎将", rank: "地僻星", avatar: "🐅", strength: 79, intelligence: 66, leadership: 68, loyalty: 85, category: "dishai", weapon: "枪棒", birth: "濠州定远", story: "史进的开手师父，原为江湖卖艺人，吝啬但义气。", favorite: false},
+{id: 87, name: "周通", nickname: "小霸王", rank: "地空星", avatar: "🤴", strength: 78, intelligence: 64, leadership: 68, loyalty: 84, category: "dishai", weapon: "走水绿沉枪", birth: "桃花山", story: "桃花山大寨主，因仰慕项羽得名'小霸王'。", favorite: false},
+{id: 88, name: "汤隆", nickname: "金钱豹子", rank: "地孤星", avatar: "🐆", strength: 77, intelligence: 72, leadership: 70, loyalty: 90, category: "dishai", weapon: "铁锤", birth: "延安府", story: "铁匠，李逵表兄，善打兵器，浑身有麻点如金钱豹。", favorite: false},
+{id: 89, name: "杜兴", nickname: "鬼脸儿", rank: "地全星", avatar: "👺", strength: 75, intelligence: 74, leadership: 72, loyalty: 92, category: "dishai", weapon: "无", birth: "中山府", story: "李应管家，因相貌丑陋得名，但办事得力。", favorite: false},
+{id: 90, name: "邹渊", nickname: "出林龙", rank: "地短星", avatar: "🐉", strength: 79, intelligence: 68, leadership: 71, loyalty: 86, category: "dishai", weapon: "长枪", birth: "莱州", story: "邹润叔叔，原为登云山头领，性气高强。", favorite: false},
+{id: 91, name: "邹润", nickname: "独角龙", rank: "地角星", avatar: "🦏", strength: 81, intelligence: 66, leadership: 72, loyalty: 88, category: "dishai", weapon: "长枪", birth: "莱州", story: "邹渊侄子，脑后生一肉瘤，曾一头撞折松树。", favorite: false},
+{id: 92, name: "朱贵", nickname: "旱地忽律", rank: "地囚星", avatar: "🐊", strength: 73, intelligence: 78, leadership: 72, loyalty: 92, category: "dishai", weapon: "无", birth: "沂州", story: "梁山早期头领，负责南山酒店，探听消息。", favorite: false},
+{id: 93, name: "朱富", nickname: "笑面虎", rank: "地藏星", avatar: "😊", strength: 70, intelligence: 76, leadership: 68, loyalty: 94, category: "dishai", weapon: "无", birth: "沂州", story: "朱贵弟弟，李逵徒弟，在沂州开酒店。", favorite: false},
+{id: 94, name: "蔡福", nickname: "铁臂膊", rank: "地平星", avatar: "💪", strength: 76, intelligence: 75, leadership: 72, loyalty: 90, category: "dishai", weapon: "无", birth: "北京", story: "北京两院押狱兼行刑刽子手，与弟弟蔡庆搭档。", favorite: false},
+{id: 95, name: "蔡庆", nickname: "一枝花", rank: "地损星", avatar: "🌸", strength: 74, intelligence: 72, leadership: 70, loyalty: 92, category: "dishai", weapon: "无", birth: "北京", story: "蔡福弟弟，也是刽子手，爱在头上戴一枝花。", favorite: false},
+{id: 96, name: "李立", nickname: "催命判官", rank: "地奴星", avatar: "👨‍⚖️", strength: 77, intelligence: 70, leadership: 71, loyalty: 84, category: "dishai", weapon: "无", birth: "江州", story: "浔阳江边开黑店，与李俊是结义兄弟。", favorite: false},
+{id: 97, name: "李云", nickname: "青眼虎", rank: "地察星", avatar: "🐯", strength: 80, intelligence: 72, leadership: 74, loyalty: 88, category: "dishai", weapon: "朴刀", birth: "沂州", story: "原为沂水县都头，朱富师父，因双眼碧绿得名。", favorite: false},
+{id: 98, name: "焦挺", nickname: "没面目", rank: "地丑星", avatar: "🎭", strength: 82, intelligence: 65, leadership: 68, loyalty: 86, category: "dishai", weapon: "拳脚", birth: "中山府", story: "相扑高手，祖传三代相扑为生，到处投人不着。", favorite: false},
+{id: 99, name: "石勇", nickname: "石将军", rank: "地劣星", avatar: "🪨", strength: 78, intelligence: 66, leadership: 68, loyalty: 90, category: "dishai", weapon: "长枪", birth: "大名府", story: "原为大名府赌徒，因一拳打死人逃亡。", favorite: false},
+{id: 100, name: "孙新", nickname: "小尉迟", rank: "地数星", avatar: "🛡️", strength: 79, intelligence: 74, leadership: 72, loyalty: 92, category: "dishai", weapon: "长枪", birth: "琼州", story: "孙立弟弟，顾大嫂丈夫，在登州开酒店。", favorite: false},
+{id: 101, name: "顾大嫂", nickname: "母大虫", rank: "地阴星", avatar: "🐯", strength: 81, intelligence: 78, leadership: 76, loyalty: 94, category: "dishai", weapon: "双刀", birth: "登州", story: "孙新妻子，梁山三位女将之一，武艺高强，性情豪爽。", favorite: true},
+{id: 102, name: "张青", nickname: "菜园子", rank: "地刑星", avatar: "🥬", strength: 76, intelligence: 72, leadership: 70, loyalty: 90, category: "dishai", weapon: "无", birth: "孟州", story: "原在孟州道光明寺种菜，后与孙二娘开黑店。", favorite: false},
+{id: 103, name: "孙二娘", nickname: "母夜叉", rank: "地壮星", avatar: "👹", strength: 80, intelligence: 75, leadership: 74, loyalty: 92, category: "dishai", weapon: "双刀", birth: "孟州", story: "张青妻子，梁山三位女将之一，在十字坡开黑店卖人肉包子。", favorite: true},
+{id: 104, name: "王定六", nickname: "活闪婆", rank: "地健星", avatar: "⚡", strength: 74, intelligence: 70, leadership: 68, loyalty: 92, category: "dishai", weapon: "短刀", birth: "建康府", story: "因走跳得快得名，在建康府扬子江边卖酒度日。", favorite: false},
+{id: 105, name: "郁保四", nickname: "险道神", rank: "地耗星", avatar: "👻", strength: 84, intelligence: 65, leadership: 72, loyalty: 88, category: "dishai", weapon: "无", birth: "青州", story: "身高一丈，原是青州强盗，曾劫夺梁山马匹。", favorite: false},
+{id: 106, name: "白胜", nickname: "白日鼠", rank: "地贼星", avatar: "🐭", strength: 65, intelligence: 75, leadership: 60, loyalty: 80, category: "dishai", weapon: "无", birth: "济州", story: "原为闲汉，参与智取生辰纲，后上梁山。", favorite: false},
+{id: 107, name: "时迁", nickname: "鼓上蚤", rank: "地贼星", avatar: "🦗", strength: 70, intelligence: 85, leadership: 65, loyalty: 90, category: "dishai", weapon: "短刀", birth: "高唐州", story: "轻功了得，飞檐走壁，擅长偷盗，为梁山立下不少功劳。", favorite: false},
+{id: 108, name: "段景住", nickname: "金毛犬", rank: "地狗星", avatar: "🐕", strength: 68, intelligence: 72, leadership: 64, loyalty: 88, category: "dishai", weapon: "无", birth: "涿州", story: "盗马贼，因头发黄得名，曾盗得照夜玉狮子马献宋江。", favorite: false}
+];
+
+// 初始化页面
+document.addEventListener('DOMContentLoaded', function() {
+// 创建星光背景
+createStars();
+
+// 更新计数器
+updateCounter(characters.length);
+
+// 渲染所有人物卡片
+renderCharacters(characters);
+
+// 添加筛选功能
+setupFilterButtons();
+
+// 添加搜索功能
+setupSearch();
+
+// 添加卡片点击事件
+setupCardClicks();
+
+// 添加关闭详情面板事件
+document.getElementById('closeDetail').addEventListener('click', closeDetailPanel);
+});
+
+// 创建星光背景
+function createStars() {
+const starsContainer = document.getElementById('stars');
+for (let i = 0; i < 150; i++) {
+const star = document.createElement('div');
+star.className = 'star';
+
+// 随机位置和大小
+const size = Math.random() * 3 + 1;
+star.style.width = `${size}px`;
+star.style.height = `${size}px`;
+star.style.left = `${Math.random() * 100}%`;
+star.style.top = `${Math.random() * 100}%`;
+
+// 随机动画延迟
+star.style.animationDelay = `${Math.random() * 5}s`;
+
+starsContainer.appendChild(star);
+}
+}
+
+// 更新计数器
+function updateCounter(count) {
+document.getElementById('count').textContent = count;
+}
+
+// 渲染人物卡片
+function renderCharacters(charactersArray) {
+const grid = document.getElementById('charactersGrid');
+
+if (charactersArray.length === 0) {
+grid.innerHTML = `
+<div class="empty-state">
+<i class="fas fa-search"></i>
+<h3>未找到匹配的好汉</h3>
+<p>尝试使用其他搜索条件或筛选条件</p>
+</div>
+`;
+updateCounter(0);
+return;
+}
+
+// 清空网格并重新添加卡片
+grid.innerHTML = '';
+
+// 更新计数器
+updateCounter(charactersArray.length);
+
+// 为每个角色添加延迟动画
+charactersArray.forEach((character, index) => {
+const card = document.createElement('div');
+card.className = 'character-card';
+card.dataset.id = character.id;
+card.style.animationDelay = `${index * 0.03}s`;
+
+// 根据是否为收藏添加星星图标
+const favoriteIcon = character.favorite ? '<i class="fas fa-star" style="color: #ffcc00; margin-left: 5px;"></i>' : '';
+
+card.innerHTML = `
+<div class="card-header">
+<div class="character-avatar">${character.avatar}</div>
+<div>
+<div class="character-name">${character.name} ${favoriteIcon}</div>
+<div class="character-nickname">${character.nickname}</div>
+</div>
+<div class="character-rank">${character.id}</div>
+</div>
+<div class="card-content">
+<div class="character-stats">
+<div class="stat-item">
+<div class="stat-value">${character.strength}</div>
+<div class="stat-label">武力</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">${character.intelligence}</div>
+<div class="stat-label">智力</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">${character.leadership}</div>
+<div class="stat-label">统率</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">${character.loyalty}</div>
+<div class="stat-label">忠义</div>
+</div>
+</div>
+<div class="character-desc">
+${character.story}
+</div>
+</div>
+`;
+
+grid.appendChild(card);
+});
+
+// 重新绑定卡片点击事件
+setupCardClicks();
+}
+
+// 设置筛选按钮功能
+function setupFilterButtons() {
+const filterButtons = document.querySelectorAll('.filter-btn');
+
+filterButtons.forEach(button => {
+button.addEventListener('click', function() {
+// 移除所有按钮的active类
+filterButtons.forEach(btn => btn.classList.remove('active'));
+// 为当前点击按钮添加active类
+this.classList.add('active');
+
+const filter = this.dataset.filter;
+filterCharacters(filter);
+});
+});
+}
+
+// 筛选人物
+function filterCharacters(filter) {
+let filteredCharacters = [];
+
+switch(filter) {
+case 'all':
+filteredCharacters = characters;
+break;
+case 'tiangang':
+filteredCharacters = characters.filter(c => c.category === 'tiangang');
+break;
+case 'dishai':
+filteredCharacters = characters.filter(c => c.category === 'dishai');
+break;
+case 'favorite':
+filteredCharacters = characters.filter(c => c.favorite);
+break;
+default:
+filteredCharacters = characters;
+}
+
+// 应用当前搜索
+const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+if (searchTerm) {
+filteredCharacters = filteredCharacters.filter(character =>
+character.name.toLowerCase().includes(searchTerm) ||
+character.nickname.toLowerCase().includes(searchTerm)
+);
+}
+
+renderCharacters(filteredCharacters);
+}
+
+// 设置搜索功能
+function setupSearch() {
+const searchInput = document.getElementById('searchInput');
+
+searchInput.addEventListener('input', function() {
+const searchTerm = this.value.toLowerCase();
+const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+
+let filteredCharacters = [];
+
+// 根据当前筛选条件过滤
+switch(activeFilter) {
+case 'all':
+filteredCharacters = characters;
+break;
+case 'tiangang':
+filteredCharacters = characters.filter(c => c.category === 'tiangang');
+break;
+case 'dishai':
+filteredCharacters = characters.filter(c => c.category === 'dishai');
+break;
+case 'favorite':
+filteredCharacters = characters.filter(c => c.favorite);
+break;
+default:
+filteredCharacters = characters;
+}
+
+// 应用搜索
+if (searchTerm) {
+filteredCharacters = filteredCharacters.filter(character =>
+character.name.toLowerCase().includes(searchTerm) ||
+character.nickname.toLowerCase().includes(searchTerm)
+);
+}
+
+renderCharacters(filteredCharacters);
+});
+}
+
+// 设置卡片点击事件
+function setupCardClicks() {
+const cards = document.querySelectorAll('.character-card');
+
+cards.forEach(card => {
+card.addEventListener('click', function() {
+const characterId = parseInt(this.dataset.id);
+const character = characters.find(c => c.id === characterId);
+
+if (character) {
+showDetailPanel(character);
+}
+});
+});
+}
+
+// 显示详情面板
+function showDetailPanel(character) {
+const panel = document.getElementById('detailPanel');
+const content = document.getElementById('detailContent');
+
+// 根据是否为收藏添加星星图标
+const favoriteIcon = character.favorite ? '<i class="fas fa-star" style="color: #ffcc00;"></i>' : '';
+
+content.innerHTML = `
+<div class="detail-avatar">${character.avatar}</div>
+<div class="detail-name">${character.name} ${favoriteIcon}</div>
+<div class="detail-nickname">${character.nickname} · ${character.rank}</div>
+
+<div class="detail-info">
+<div class="info-row">
+<div class="info-label">编号</div>
+<div class="info-value">第${character.id}位</div>
+</div>
+<div class="info-row">
+<div class="info-label">星宿</div>
+<div class="info-value">${character.rank}</div>
+</div>
+<div class="info-row">
+<div class="info-label">武力</div>
+<div class="info-value">
+<div style="background: #ff9900; width: ${character.strength}%; height: 10px; border-radius: 5px;"></div>
+<span style="margin-left: 10px;">${character.strength}</span>
+</div>
+</div>
+<div class="info-row">
+<div class="info-label">智力</div>
+<div class="info-value">
+<div style="background: #4CAF50; width: ${character.intelligence}%; height: 10px; border-radius: 5px;"></div>
+<span style="margin-left: 10px;">${character.intelligence}</span>
+</div>
+</div>
+<div class="info-row">
+<div class="info-label">统率</div>
+<div class="info-value">
+<div style="background: #2196F3; width: ${character.leadership}%; height: 10px; border-radius: 5px;"></div>
+<span style="margin-left: 10px;">${character.leadership}</span>
+</div>
+</div>
+<div class="info-row">
+<div class="info-label">忠义</div>
+<div class="info-value">
+<div style="background: #F44336; width: ${character.loyalty}%; height: 10px; border-radius: 5px;"></div>
+<span style="margin-left: 10px;">${character.loyalty}</span>
+</div>
+</div>
+<div class="info-row">
+<div class="info-label">武器</div>
+<div class="info-value">${character.weapon}</div>
+</div>
+<div class="info-row">
+<div class="info-label">籍贯</div>
+<div class="info-value">${character.birth}</div>
+</div>
+</div>
+
+<div class="detail-story">
+<h3>人物简介</h3>
+<p>${character.story}</p>
+</div>
+
+<div style="margin-top: 30px; text-align: center;">
+<button id="toggleFavorite" class="filter-btn" style="width: 100%;">
+<i class="${character.favorite ? 'fas' : 'far'} fa-star"></i>
+${character.favorite ? '取消收藏' : '收藏这位好汉'}
+</button>
+</div>
+`;
+
+// 添加收藏切换功能
+document.getElementById('toggleFavorite').addEventListener('click', function() {
+character.favorite = !character.favorite;
+
+// 更新UI
+const favoriteBtn = document.getElementById('toggleFavorite');
+favoriteBtn.innerHTML = `<i class="${character.favorite ? 'fas' : 'far'} fa-star"></i> ${character.favorite ? '取消收藏' : '收藏这位好汉'}`;
+
+// 更新详情面板的收藏图标
+const detailName = document.querySelector('.detail-name');
+if (character.favorite) {
+detailName.innerHTML = `${character.name} <i class="fas fa-star" style="color: #ffcc00;"></i>`;
+} else {
+detailName.innerHTML = character.name;
+}
+
+// 更新卡片上的收藏状态
+const cards = document.querySelectorAll('.character-card');
+cards.forEach(card => {
+if (parseInt(card.dataset.id) === character.id) {
+const nameElement = card.querySelector('.character-name');
+if (character.favorite) {
+nameElement.innerHTML = `${character.name} <i class="fas fa-star" style="color: #ffcc00; margin-left: 5px;"></i>`;
+} else {
+nameElement.innerHTML = character.name;
+}
+}
+});
+
+// 如果当前在收藏筛选下，更新列表
+const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+if (activeFilter === 'favorite') {
+filterCharacters('favorite');
+}
+});
+
+// 显示面板
+panel.classList.add('active');
+}
+
+// 关闭详情面板
+function closeDetailPanel() {
+const panel = document.getElementById('detailPanel');
+panel.classList.remove('active');
+}
+
+// 点击详情面板外部关闭
+document.addEventListener('click', function(event) {
+const panel = document.getElementById('detailPanel');
+const closeBtn = document.getElementById('closeDetail');
+
+if (panel.classList.contains('active') &&
+!panel.contains(event.target) &&
+event.target !== closeBtn &&
+!event.target.closest('.character-card')) {
+closeDetailPanel();
+}
+});
+</script>
+</body>
+</html>
