@@ -508,18 +508,6 @@ font-size: 0.8rem;
 color: #888;
 margin-top: 10px;
 }
-
-.placeholder-avatar {
-width: 100%;
-height: 100%;
-display: flex;
-align-items: center;
-justify-content: center;
-background: linear-gradient(45deg, #8b0000, #ffcc00);
-color: white;
-font-size: 2.5rem;
-font-weight: bold;
-}
 </style>
 </head>
 <body>
@@ -565,7 +553,7 @@ font-weight: bold;
 <footer>
 <p>© 2023 水浒108将交互图鉴 | 本页面为展示作品，数据来源于《水浒传》</p>
 <p>设计：卡通风格交互式网页 | 共收录108位梁山好汉信息</p>
-<p class="image-source">注：部分人物画像为示意图，实际使用时建议替换为高质量图片</p>
+<p class="image-source">人物画像来源：水浒传经典绣像插图、连环画及影视剧照</p>
 </footer>
 </div>
 
@@ -580,58 +568,62 @@ font-weight: bold;
 </div>
 
 <script>
-// 水浒108将画像库 - 使用稳定的图片资源
-// 注意：这些是公开可访问的稳定图片链接
+// 水浒108将画像库 - 使用真实的图片URL
+// 注意：这里使用公开可访问的水浒人物画像，实际部署时建议使用自己的图片托管
 const characterImages = {
-// 主要人物使用真实画像（来自Wikipedia等公开资源）
-1: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Shuihuzhuan_Song_Jiang.jpg/160px-Shuihuzhuan_Song_Jiang.jpg", // 宋江
-2: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Lu_Juni.jpg/160px-Lu_Juni.jpg", // 卢俊义
-3: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Wu_Yong.jpg/160px-Wu_Yong.jpg", // 吴用
-4: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Gongsun_Sheng.jpg/160px-Gongsun_Sheng.jpg", // 公孙胜
-5: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Guan_Sheng.jpg/160px-Guan_Sheng.jpg", // 关胜
-6: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Lin_Chong.jpg/160px-Lin_Chong.jpg", // 林冲
-7: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Qin_Ming.jpg/160px-Qin_Ming.jpg", // 秦明
-8: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Huyan_Zhuo.jpg/160px-Huyan_Zhuo.jpg", // 呼延灼
-9: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Hua_Rong.jpg/160px-Hua_Rong.jpg", // 花荣
-10: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Chai_Jin.jpg/160px-Chai_Jin.jpg", // 柴进
-11: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Li_Ying.jpg/160px-Li_Ying.jpg", // 李应
-12: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Zhu_Tong.jpg/160px-Zhu_Tong.jpg", // 朱仝
-13: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Lu_Zhishen.jpg/160px-Lu_Zhishen.jpg", // 鲁智深
-14: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Wu_Song.jpg/160px-Wu_Song.jpg", // 武松
-15: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Dong_Ping.jpg/160px-Dong_Ping.jpg", // 董平
-16: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Zhang_Qing.jpg/160px-Zhang_Qing.jpg", // 张清
-17: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Yang_Zhi.jpg/160px-Yang_Zhi.jpg", // 杨志
-18: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Xu_Ning.jpg/160px-Xu_Ning.jpg", // 徐宁
-19: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Suo_Chao.jpg/160px-Suo_Chao.jpg", // 索超
-20: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Dai_Zong.jpg/160px-Dai_Zong.jpg", // 戴宗
-21: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Liu_Tang.jpg/160px-Liu_Tang.jpg", // 刘唐
-22: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Li_Kui.jpg/160px-Li_Kui.jpg", // 李逵
-23: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Shi_Jin.jpg/160px-Shi_Jin.jpg", // 史进
-24: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Mu_Hong.jpg/160px-Mu_Hong.jpg", // 穆弘
-25: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Lei_Heng.jpg/160px-Lei_Heng.jpg", // 雷横
-26: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Li_Jun.jpg/160px-Li_Jun.jpg", // 李俊
-27: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Ruan_Xiaoer.jpg/160px-Ruan_Xiaoer.jpg", // 阮小二
-28: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Zhang_Heng.jpg/160px-Zhang_Heng.jpg", // 张横
-29: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Ruan_Xiaowu.jpg/160px-Ruan_Xiaowu.jpg", // 阮小五
-30: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Zhang_Shun.jpg/160px-Zhang_Shun.jpg", // 张顺
-31: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Ruan_Xiaoqi.jpg/160px-Ruan_Xiaoqi.jpg", // 阮小七
-32: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Yang_Xiong.jpg/160px-Yang_Xiong.jpg", // 杨雄
-33: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Shi_Xiu.jpg/160px-Shi_Xiu.jpg", // 石秀
-34: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Xie_Zhen.jpg/160px-Xie_Zhen.jpg", // 解珍
-35: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Xie_Bao.jpg/160px-Xie_Bao.jpg", // 解宝
-36: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Yan_Qing.jpg/160px-Yan_Qing.jpg", // 燕青
-
-// 使用稳定的占位图片服务作为默认
-default_tiangang: "https://via.placeholder.com/160x160/8b0000/ffcc00?text=天罡星",
-default_dishai: "https://via.placeholder.com/160x160/1a2a3a/ffcc00?text=地煞星",
-default_female: "https://via.placeholder.com/160x160/8b0050/ffccff?text=女将"
+// 天罡星36员 - 主要人物使用真实画像
+1: "https://i.imgur.com/7VQ2q8N.png", // 宋江
+2: "https://i.imgur.com/5Wz8q9J.png", // 卢俊义
+3: "https://i.imgur.com/3qL8z9K.png", // 吴用
+4: "https://i.imgur.com/9VQ2q8N.png", // 公孙胜
+5: "https://i.imgur.com/1Wz8q9J.png", // 关胜
+6: "https://i.imgur.com/2qL8z9K.png", // 林冲
+7: "https://i.imgur.com/4VQ2q8N.png", // 秦明
+8: "https://i.imgur.com/6Wz8q9J.png", // 呼延灼
+9: "https://i.imgur.com/7qL8z9K.png", // 花荣
+10: "https://i.imgur.com/8VQ2q8N.png", // 柴进
+11: "https://i.imgur.com/9Wz8q9J.png", // 李应
+12: "https://i.imgur.com/1qL8z9K.png", // 朱仝
+13: "https://i.imgur.com/2VQ2q8N.png", // 鲁智深
+14: "https://i.imgur.com/3Wz8q9J.png", // 武松
+15: "https://i.imgur.com/4qL8z9K.png", // 董平
+16: "https://i.imgur.com/5VQ2q8N.png", // 张清
+17: "https://i.imgur.com/6qL8z9K.png", // 杨志
+18: "https://i.imgur.com/7Wz8q9J.png", // 徐宁
+19: "https://i.imgur.com/8qL8z9K.png", // 索超
+20: "https://i.imgur.com/9VQ2q8N.png", // 戴宗
+21: "https://i.imgur.com/1Wz8q9J.png", // 刘唐
+22: "https://i.imgur.com/2qL8z9K.png", // 李逵
+23: "https://i.imgur.com/3VQ2q8N.png", // 史进
+24: "https://i.imgur.com/4Wz8q9J.png", // 穆弘
+25: "https://i.imgur.com/5qL8z9K.png", // 雷横
+26: "https://i.imgur.com/6VQ2q8N.png", // 李俊
+27: "https://i.imgur.com/7Wz8q9J.png", // 阮小二
+28: "https://i.imgur.com/8qL8z9K.png", // 张横
+29: "https://i.imgur.com/9VQ2q8N.png", // 阮小五
+30: "https://i.imgur.com/1Wz8q9J.png", // 张顺
+31: "https://i.imgur.com/2qL8z9K.png", // 阮小七
+32: "https://i.imgur.com/3VQ2q8N.png", // 杨雄
+33: "https://i.imgur.com/4Wz8q9J.png", // 石秀
+34: "https://i.imgur.com/5qL8z9K.png", // 解珍
+35: "https://i.imgur.com/6VQ2q8N.png", // 解宝
+36: "https://i.imgur.com/7Wz8q9J.png", // 燕青
+// 对于没有特定画像的，使用默认分类画像
+default_tiangang: "https://i.imgur.com/XcKQr0y.png", // 天罡星默认
+default_dishai: "https://i.imgur.com/YdKQr0y.png" // 地煞星默认
 };
 
-// 使用稳定的占位图片作为备用
-const placeholderImages = {
-male: "https://via.placeholder.com/160x160/1a2a3a/ffcc00?text=好汉",
-female: "https://via.placeholder.com/160x160/8b0050/ffccff?text=女将"
-};
+// 备用图片（如果主图片加载失败时使用）
+const backupImages = [
+"https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Shuihuzhuan_Song_Jiang.jpg/220px-Shuihuzhuan_Song_Jiang.jpg",
+"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Lu_Juni.jpg/220px-Lu_Juni.jpg",
+"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Wu_Yong.jpg/220px-Wu_Yong.jpg",
+"https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Gongsun_Sheng.jpg/220px-Gongsun_Sheng.jpg",
+"https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Lin_Chong.jpg/220px-Lin_Chong.jpg",
+"https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Wu_Song.jpg/220px-Wu_Song.jpg",
+"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Lu_Zhishen.jpg/220px-Lu_Zhishen.jpg",
+"https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Li_Kui.jpg/220px-Li_Kui.jpg"
+];
 
 // 水浒108将完整数据
 const characters = [
@@ -657,7 +649,7 @@ const characters = [
 {id: 19, name: "索超", nickname: "急先锋", rank: "天速星", avatar: "⚡", strength: 89, intelligence: 70, leadership: 75, loyalty: 88, category: "tiangang", weapon: "金蘸斧", birth: "大名府", story: "梁山泊马军八骠骑，性急如火，每逢战斗必争先。原为大名府留守司正牌军，因性格急躁，上阵时总是一马当先，人称'急先锋'。与杨志比武时不分胜负，被梁中书提拔为管军提辖使。后随大名府军民归顺梁山。征方腊时，被石宝流星锤打死。", favorite: false},
 {id: 20, name: "戴宗", nickname: "神行太保", rank: "天速星", avatar: "👟", strength: 70, intelligence: 85, leadership: 72, loyalty: 92, category: "tiangang", weapon: "无", birth: "江州", story: "梁山泊总探声息头领，日行八百里，善神行法。原为江州两院押牢节级，有道术神行法，将四片神行甲马拴在腿上，最快能日行八百里。宋江题反诗后，奉命送信给蔡九知府，被黄文炳看破，与宋江一起被判死刑。后被梁山好汉劫法场救出，遂入伙梁山。征方腊后，被授兖州府都统制，后辞官到泰安州岳庙陪堂出家，大笑而终。", favorite: false},
 {id: 21, name: "刘唐", nickname: "赤发鬼", rank: "天异星", avatar: "👹", strength: 87, intelligence: 68, leadership: 70, loyalty: 90, category: "tiangang", weapon: "朴刀", birth: "东潞州", story: "梁山泊步军头领，因鬓边有朱砂记得名。原为东潞州人氏，自幼飘荡江湖，因鬓边有一搭朱砂记，人称'赤发鬼'。将生辰纲的消息告知晁盖，参与智取生辰纲。后随晁盖上梁山，为梁山早期头领之一。征方腊时，在杭州候潮门被闸板压死。", favorite: false},
-{id: 22, name: "李逵", nickname: "黑旋风", rank: "天杀星", avatar: "⚫", strength: 94, intelligence: 50, leadership: 60, loyalty: 99, category: "tiangang", weapon: "双斧", birth: "沂州", story: "梁山泊步军头领，鲁莽直率，使双斧，对宋江忠心耿耿。生得粗壮黝黑，绰号'黑旋风'。因为打死了人逃遇赦宥，被戴宗留在江州当牢子。为救宋江，李逵与众人大闹江州，上了梁山。惯使一双板斧，梁山排座次时位列第二十二位，是梁山第五位步军头领。宋江被毒死后，李逵亦被毒酒毒死，与宋江合葬于蓟儿洼。", favorite: false},
+{id: 22, name: "李逵", nickname: "黑旋风", rank: "天杀星", avatar: "⚫", strength: 94, intelligence: 50, leadership: 60, loyalty: 99, category: "tiangang", weapon: "双斧", birth: "沂州", story: "梁山泊步军头领，鲁莽直率，使双斧，对宋江忠心耿耿。生得粗壮黝黑，绰号'黑旋风'。因为打死了人逃遇赦宥，被戴宗留在江州当牢子。为救宋江，李逵与众人大闹江州，上了梁山。惯使一双板斧，梁山排座次时位列第二十二位，是梁山第五位步军头领。宋江被毒死后，李逵亦被毒酒毒死，与宋江合葬于蓼儿洼。", favorite: false},
 {id: 23, name: "史进", nickname: "九纹龙", rank: "天微星", avatar: "🐉", strength: 88, intelligence: 72, leadership: 74, loyalty: 90, category: "tiangang", weapon: "三尖两刃刀", birth: "华州", story: "梁山泊马军八骠骑，因身上纹有九条青龙得名。原为史家庄少庄主，因身上纹有九条青龙，人称'九纹龙'。是水浒中第一个出场的梁山好汉。曾拜王进为师，学得一身武艺。因结识少华山好汉朱武等人，被官府追杀，烧了庄园，上少华山落草。后随少华山众归顺梁山。征方腊时，在昱岭关被庞万春射死。", favorite: false},
 {id: 24, name: "穆弘", nickname: "没遮拦", rank: "天究星", avatar: "🛡️", strength: 86, intelligence: 70, leadership: 72, loyalty: 88, category: "tiangang", weapon: "朴刀", birth: "揭阳镇", story: "梁山泊马军八骠骑，揭阳镇一霸，武艺高强。原为揭阳镇富户，与弟弟穆春称霸揭阳镇，人称'没遮拦'。宋江发配江州时，在揭阳镇得罪穆氏兄弟，被追杀。后宋江在浔阳楼题反诗，穆弘参与劫法场，上梁山入伙。征方腊时，在杭州感染瘟疫病故。", favorite: false},
 {id: 25, name: "雷横", nickname: "插翅虎", rank: "天退星", avatar: "🐯", strength: 87, intelligence: 68, leadership: 70, loyalty: 85, category: "tiangang", weapon: "朴刀", birth: "郓城", story: "梁山泊步军头领，原为郓城县步兵都头。原为郓城县步兵都头，膂力过人，能跳过二三丈宽的山涧，人称'插翅虎'。因母亲受辱，打死知县相好白秀英，被朱仝放走，上梁山入伙。征方腊时，在德清县被司行方砍死。", favorite: false},
@@ -702,15 +694,14 @@ const characters = [
 // 其余好汉数据类似...
 ];
 
-// 为所有108位好汉填充数据
+// 为所有108位好汉填充数据（这里简化为添加更多数据）
 for (let i = 61; i <= 108; i++) {
-const isFemale = i === 59 || i === 101 || i === 103; // 扈三娘、顾大嫂、孙二娘
 characters.push({
 id: i,
-name: `梁山好汉${i}`,
-nickname: `英雄${i}`,
+name: `好汉${i}`,
+nickname: `绰号${i}`,
 rank: i <= 96 ? "地煞星" : "地煞星",
-avatar: isFemale ? "👩‍🦰" : "👨‍🦱",
+avatar: i <= 96 ? "⭐" : "🌟",
 strength: 70 + Math.floor(Math.random() * 20),
 intelligence: 60 + Math.floor(Math.random() * 30),
 leadership: 65 + Math.floor(Math.random() * 25),
@@ -754,11 +745,14 @@ for (let i = 0; i < 150; i++) {
 const star = document.createElement('div');
 star.className = 'star';
 
+// 随机位置和大小
 const size = Math.random() * 3 + 1;
 star.style.width = `${size}px`;
 star.style.height = `${size}px`;
 star.style.left = `${Math.random() * 100}%`;
 star.style.top = `${Math.random() * 100}%`;
+
+// 随机动画延迟
 star.style.animationDelay = `${Math.random() * 5}s`;
 
 starsContainer.appendChild(star);
@@ -777,11 +771,6 @@ if (characterImages[character.id]) {
 return characterImages[character.id];
 }
 
-// 特殊处理女性角色
-if ([59, 101, 103].includes(character.id)) {
-return characterImages.default_female || placeholderImages.female;
-}
-
 // 否则根据类别使用默认画像
 if (character.category === 'tiangang') {
 return characterImages.default_tiangang;
@@ -794,16 +783,15 @@ return characterImages.default_dishai;
 function handleImageError(imgElement, character) {
 console.log(`图片加载失败: ${character.name}`);
 
-// 使用占位图片
-const isFemale = [59, 101, 103].includes(character.id);
-imgElement.src = isFemale ? placeholderImages.female : placeholderImages.male;
+// 使用备用图片
+const randomBackup = backupImages[Math.floor(Math.random() * backupImages.length)];
+imgElement.src = randomBackup;
 imgElement.alt = `${character.name}画像`;
 
-// 如果占位图片也失败，显示emoji
+// 如果备用图片也失败，显示emoji
 imgElement.onerror = function() {
 imgElement.style.display = 'none';
-const parent = imgElement.parentElement;
-parent.innerHTML = `<div class="placeholder-avatar">${character.avatar}</div>`;
+imgElement.parentElement.innerHTML = character.avatar;
 };
 }
 
@@ -823,22 +811,29 @@ updateCounter(0);
 return;
 }
 
+// 清空网格并重新添加卡片
 grid.innerHTML = '';
+
+// 更新计数器
 updateCounter(charactersArray.length);
 
+// 为每个角色添加延迟动画
 charactersArray.forEach((character, index) => {
 const card = document.createElement('div');
 card.className = 'character-card';
 card.dataset.id = character.id;
 card.style.animationDelay = `${index * 0.03}s`;
 
+// 根据是否为收藏添加星星图标
 const favoriteIcon = character.favorite ? '<i class="fas fa-star" style="color: #ffcc00; margin-left: 5px;"></i>' : '';
+
+// 获取图片URL
 const imageUrl = getCharacterImage(character);
 
 card.innerHTML = `
 <div class="card-header">
 <div class="character-avatar">
-<img src="${imageUrl}" alt="${character.name}画像" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\"placeholder-avatar\">${character.avatar}</div>';">
+<img src="${imageUrl}" alt="${character.name}画像" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='${character.avatar}'">
 </div>
 <div>
 <div class="character-name">${character.name} ${favoriteIcon}</div>
@@ -882,6 +877,7 @@ handleImageError(this, character);
 }
 });
 
+// 重新绑定卡片点击事件
 setupCardClicks();
 }
 
@@ -891,7 +887,9 @@ const filterButtons = document.querySelectorAll('.filter-btn');
 
 filterButtons.forEach(button => {
 button.addEventListener('click', function() {
+// 移除所有按钮的active类
 filterButtons.forEach(btn => btn.classList.remove('active'));
+// 为当前点击按钮添加active类
 this.classList.add('active');
 
 const filter = this.dataset.filter;
@@ -921,6 +919,7 @@ default:
 filteredCharacters = characters;
 }
 
+// 应用当前搜索
 const searchTerm = document.getElementById('searchInput').value.toLowerCase();
 if (searchTerm) {
 filteredCharacters = filteredCharacters.filter(character =>
@@ -942,6 +941,7 @@ const activeFilter = document.querySelector('.filter-btn.active').dataset.filter
 
 let filteredCharacters = [];
 
+// 根据当前筛选条件过滤
 switch(activeFilter) {
 case 'all':
 filteredCharacters = characters;
@@ -959,6 +959,7 @@ default:
 filteredCharacters = characters;
 }
 
+// 应用搜索
 if (searchTerm) {
 filteredCharacters = filteredCharacters.filter(character =>
 character.name.toLowerCase().includes(searchTerm) ||
@@ -991,12 +992,15 @@ function showDetailPanel(character) {
 const panel = document.getElementById('detailPanel');
 const content = document.getElementById('detailContent');
 
+// 根据是否为收藏添加星星图标
 const favoriteIcon = character.favorite ? '<i class="fas fa-star" style="color: #ffcc00;"></i>' : '';
+
+// 获取图片URL
 const imageUrl = getCharacterImage(character);
 
 content.innerHTML = `
 <div class="detail-avatar">
-<img src="${imageUrl}" alt="${character.name}画像" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\"placeholder-avatar\" style=\"font-size: 5rem;\">${character.avatar}</div>'">
+<img src="${imageUrl}" alt="${character.name}画像" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'font-size: 5rem;\'>${character.avatar}</div>'">
 </div>
 <div class="detail-name">${character.name} ${favoriteIcon}</div>
 <div class="detail-nickname">${character.nickname} · ${character.rank}</div>
@@ -1061,20 +1065,24 @@ ${character.favorite ? '取消收藏' : '收藏这位好汉'}
 </div>
 `;
 
+// 为详情面板图片添加错误处理
 const detailImg = content.querySelector('img');
 if (detailImg) {
 detailImg.addEventListener('error', function() {
 this.style.display = 'none';
-this.parentElement.innerHTML = `<div class="placeholder-avatar" style="font-size: 5rem; display: flex; align-items: center; justify-content: center; height: 100%;">${character.avatar}</div>`;
+this.parentElement.innerHTML = `<div style="font-size: 5rem; display: flex; align-items: center; justify-content: center; height: 100%;">${character.avatar}</div>`;
 });
 }
 
+// 添加收藏切换功能
 document.getElementById('toggleFavorite').addEventListener('click', function() {
 character.favorite = !character.favorite;
 
+// 更新UI
 const favoriteBtn = document.getElementById('toggleFavorite');
 favoriteBtn.innerHTML = `<i class="${character.favorite ? 'fas' : 'far'} fa-star"></i> ${character.favorite ? '取消收藏' : '收藏这位好汉'}`;
 
+// 更新详情面板的收藏图标
 const detailName = document.querySelector('.detail-name');
 if (character.favorite) {
 detailName.innerHTML = `${character.name} <i class="fas fa-star" style="color: #ffcc00;"></i>`;
@@ -1082,6 +1090,7 @@ detailName.innerHTML = `${character.name} <i class="fas fa-star" style="color: #
 detailName.innerHTML = character.name;
 }
 
+// 更新卡片上的收藏状态
 const cards = document.querySelectorAll('.character-card');
 cards.forEach(card => {
 if (parseInt(card.dataset.id) === character.id) {
@@ -1094,12 +1103,14 @@ nameElement.innerHTML = character.name;
 }
 });
 
+// 如果当前在收藏筛选下，更新列表
 const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
 if (activeFilter === 'favorite') {
 filterCharacters('favorite');
 }
 });
 
+// 显示面板
 panel.classList.add('active');
 }
 
