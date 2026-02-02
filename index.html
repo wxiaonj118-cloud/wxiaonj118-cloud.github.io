@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>水浒108将 - 真实画像交互图鉴</title>
+<title>水浒108将 - 卡通交互图鉴</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
 <style>
@@ -160,18 +160,6 @@ justify-content: center;
 font-size: 2.5rem;
 overflow: hidden;
 flex-shrink: 0;
-position: relative;
-}
-
-.character-avatar img {
-width: 100%;
-height: 100%;
-object-fit: cover;
-transition: transform 0.3s ease;
-}
-
-.character-card:hover .character-avatar img {
-transform: scale(1.1);
 }
 
 .character-name {
@@ -290,8 +278,8 @@ margin-top: 30px;
 }
 
 .detail-avatar {
-width: 200px;
-height: 200px;
+width: 150px;
+height: 150px;
 border-radius: 50%;
 border: 5px solid #ffcc00;
 margin: 0 auto 20px;
@@ -299,19 +287,8 @@ background: #0d1520;
 display: flex;
 align-items: center;
 justify-content: center;
+font-size: 4.5rem;
 overflow: hidden;
-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-}
-
-.detail-avatar img {
-width: 100%;
-height: 100%;
-object-fit: cover;
-transition: transform 0.5s ease;
-}
-
-.detail-avatar:hover img {
-transform: scale(1.05);
 }
 
 .detail-name {
@@ -403,11 +380,6 @@ align-items: center;
 .search-box input {
 width: 100%;
 }
-
-.detail-avatar {
-width: 150px;
-height: 150px;
-}
 }
 
 /* 动画效果 */
@@ -490,24 +462,6 @@ padding: 5px 15px;
 border-radius: 20px;
 margin: 0 10px;
 }
-
-.loading-img {
-width: 100%;
-height: 100%;
-display: flex;
-align-items: center;
-justify-content: center;
-background: #0d1520;
-color: #ffcc00;
-font-size: 0.8rem;
-}
-
-.image-source {
-text-align: center;
-font-size: 0.8rem;
-color: #888;
-margin-top: 10px;
-}
 </style>
 </head>
 <body>
@@ -517,7 +471,7 @@ margin-top: 10px;
 <div class="container">
 <header>
 <h1>水浒108将</h1>
-<div class="subtitle">梁山好汉真实画像交互图鉴</div>
+<div class="subtitle">梁山好汉卡通交互图鉴</div>
 </header>
 
 <div class="counter">
@@ -553,7 +507,6 @@ margin-top: 10px;
 <footer>
 <p>© 2023 水浒108将交互图鉴 | 本页面为展示作品，数据来源于《水浒传》</p>
 <p>设计：卡通风格交互式网页 | 共收录108位梁山好汉信息</p>
-<p class="image-source">人物画像来源：水浒传经典绣像插图、连环画及影视剧照</p>
 </footer>
 </div>
 
@@ -568,151 +521,120 @@ margin-top: 10px;
 </div>
 
 <script>
-// 水浒108将画像库 - 使用真实的图片URL
-// 注意：这里使用公开可访问的水浒人物画像，实际部署时建议使用自己的图片托管
-const characterImages = {
-// 天罡星36员 - 主要人物使用真实画像
-1: "https://i.imgur.com/7VQ2q8N.png", // 宋江
-2: "https://i.imgur.com/5Wz8q9J.png", // 卢俊义
-3: "https://i.imgur.com/3qL8z9K.png", // 吴用
-4: "https://i.imgur.com/9VQ2q8N.png", // 公孙胜
-5: "https://i.imgur.com/1Wz8q9J.png", // 关胜
-6: "https://i.imgur.com/2qL8z9K.png", // 林冲
-7: "https://i.imgur.com/4VQ2q8N.png", // 秦明
-8: "https://i.imgur.com/6Wz8q9J.png", // 呼延灼
-9: "https://i.imgur.com/7qL8z9K.png", // 花荣
-10: "https://i.imgur.com/8VQ2q8N.png", // 柴进
-11: "https://i.imgur.com/9Wz8q9J.png", // 李应
-12: "https://i.imgur.com/1qL8z9K.png", // 朱仝
-13: "https://i.imgur.com/2VQ2q8N.png", // 鲁智深
-14: "https://i.imgur.com/3Wz8q9J.png", // 武松
-15: "https://i.imgur.com/4qL8z9K.png", // 董平
-16: "https://i.imgur.com/5VQ2q8N.png", // 张清
-17: "https://i.imgur.com/6qL8z9K.png", // 杨志
-18: "https://i.imgur.com/7Wz8q9J.png", // 徐宁
-19: "https://i.imgur.com/8qL8z9K.png", // 索超
-20: "https://i.imgur.com/9VQ2q8N.png", // 戴宗
-21: "https://i.imgur.com/1Wz8q9J.png", // 刘唐
-22: "https://i.imgur.com/2qL8z9K.png", // 李逵
-23: "https://i.imgur.com/3VQ2q8N.png", // 史进
-24: "https://i.imgur.com/4Wz8q9J.png", // 穆弘
-25: "https://i.imgur.com/5qL8z9K.png", // 雷横
-26: "https://i.imgur.com/6VQ2q8N.png", // 李俊
-27: "https://i.imgur.com/7Wz8q9J.png", // 阮小二
-28: "https://i.imgur.com/8qL8z9K.png", // 张横
-29: "https://i.imgur.com/9VQ2q8N.png", // 阮小五
-30: "https://i.imgur.com/1Wz8q9J.png", // 张顺
-31: "https://i.imgur.com/2qL8z9K.png", // 阮小七
-32: "https://i.imgur.com/3VQ2q8N.png", // 杨雄
-33: "https://i.imgur.com/4Wz8q9J.png", // 石秀
-34: "https://i.imgur.com/5qL8z9K.png", // 解珍
-35: "https://i.imgur.com/6VQ2q8N.png", // 解宝
-36: "https://i.imgur.com/7Wz8q9J.png", // 燕青
-// 对于没有特定画像的，使用默认分类画像
-default_tiangang: "https://i.imgur.com/XcKQr0y.png", // 天罡星默认
-default_dishai: "https://i.imgur.com/YdKQr0y.png" // 地煞星默认
-};
-
-// 备用图片（如果主图片加载失败时使用）
-const backupImages = [
-"https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Shuihuzhuan_Song_Jiang.jpg/220px-Shuihuzhuan_Song_Jiang.jpg",
-"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Lu_Juni.jpg/220px-Lu_Juni.jpg",
-"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Wu_Yong.jpg/220px-Wu_Yong.jpg",
-"https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Gongsun_Sheng.jpg/220px-Gongsun_Sheng.jpg",
-"https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Lin_Chong.jpg/220px-Lin_Chong.jpg",
-"https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Wu_Song.jpg/220px-Wu_Song.jpg",
-"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Lu_Zhishen.jpg/220px-Lu_Zhishen.jpg",
-"https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Li_Kui.jpg/220px-Li_Kui.jpg"
-];
-
 // 水浒108将完整数据
 const characters = [
 // 天罡星36员
-{id: 1, name: "宋江", nickname: "及时雨", rank: "天魁星", avatar: "👑", strength: 72, intelligence: 90, leadership: 98, loyalty: 95, category: "tiangang", weapon: "朴刀、宝剑", birth: "山东郓城", story: "梁山泊总兵都头领，原为郓城县押司，仗义疏财，人称'及时雨'。在浔阳楼题反诗被判死罪，得梁山好汉劫法场救出，从此上梁山。晁盖死后成为梁山泊主，主张接受朝廷招安，带领梁山好汉征讨方腊，后被高俅等人毒害。", favorite: false},
-{id: 2, name: "卢俊义", nickname: "玉麒麟", rank: "天罡星", avatar: "🦄", strength: 97, intelligence: 85, leadership: 90, loyalty: 92, category: "tiangang", weapon: "麒麟黄金矛", birth: "北京大名府", story: "梁山泊副总兵都头领，棍棒天下无双，河北三绝之一。原是河北大名府富商、大财主，被宋江等人设计赚上梁山。上梁山后坐第二把交椅，为梁山立下赫赫战功。征讨方腊后被封为庐州安抚使，后被高俅设计在皇帝御酒里放入水银，中毒后失足落水而死。", favorite: false},
-{id: 3, name: "吴用", nickname: "智多星", rank: "天机星", avatar: "🎓", strength: 62, intelligence: 98, leadership: 88, loyalty: 90, category: "tiangang", weapon: "铜链、羽扇", birth: "山东郓城", story: "梁山泊掌管机密军师，足智多谋，曾智取生辰纲。原为村塾教师，通晓文韬武略，曾与晁盖等人智取生辰纲。上梁山后成为军师，为梁山出谋划策，屡建奇功。在梁山招安后，被封为武胜军承宣使。宋江被害后，他与花荣一同在宋江墓前自缢身亡。", favorite: false},
-{id: 4, name: "公孙胜", nickname: "入云龙", rank: "天闲星", avatar: "🐉", strength: 80, intelligence: 92, leadership: 75, loyalty: 85, category: "tiangang", weapon: "松纹古铜剑", birth: "蓟州", story: "梁山泊掌管机密军师，道术高深，能呼风唤雨。师从罗真人，学得一身道术，能呼风唤雨，驾雾腾云，人称入云龙。曾与晁盖、吴用等七人结义，一同劫取生辰纲。上梁山后任掌管机密军师。征讨方腊前返回蓟州二仙山，从师学道，侍养老母，以终天年。", favorite: false},
-{id: 5, name: "关胜", nickname: "大刀", rank: "天勇星", avatar: "⚔️", strength: 95, intelligence: 80, leadership: 85, loyalty: 90, category: "tiangang", weapon: "青龙偃月刀", birth: "蒲东", story: "梁山泊马军五虎将之首，关羽后人，使青龙偃月刀。原为蒲东巡检，因梁山攻打北京，被宣赞推荐给童贯，领兵攻打梁山以解北京之围。关胜一人大战林冲、秦明两人，在即将落败之时，宋江怕关胜战亡叫停。之后呼延灼用假投降的办法引关胜兵马进入宋江的大寨，被挠挂钩拖下马鞍活捉。关胜感到宋江有胆识重义气，便归顺了梁山。", favorite: false},
-{id: 6, name: "林冲", nickname: "豹子头", rank: "天雄星", avatar: "🐆", strength: 94, intelligence: 82, leadership: 88, loyalty: 92, category: "tiangang", weapon: "丈八蛇矛", birth: "东京", story: "梁山泊马军五虎将，原为八十万禁军教头，被逼上梁山。因其妻子被太尉高俅的养子高衙内看上，而多次遭到陷害，最终被逼上梁山落草。梁山大聚义时排第六位，为马军五虎将之一。征讨方腊后病逝于杭州六和寺，追封忠武郎。", favorite: true},
-{id: 7, name: "秦明", nickname: "霹雳火", rank: "天猛星", avatar: "🔥", strength: 92, intelligence: 70, leadership: 80, loyalty: 85, category: "tiangang", weapon: "狼牙棒", birth: "山后开州", story: "梁山泊马军五虎将，性如烈火，使狼牙棒。原为青州指挥司总管兵马统制，善使一条狼牙棒。宋江为了赚秦明入伙，设计害得秦明一家老小被杀，秦明无奈只得归顺梁山。后娶花荣之妹为妻。征方腊时遭方杰暗算，被方杰一戟刺死。", favorite: false},
-{id: 8, name: "呼延灼", nickname: "双鞭", rank: "天威星", avatar: "⚡", strength: 93, intelligence: 78, leadership: 84, loyalty: 88, category: "tiangang", weapon: "双鞭", birth: "河东", story: "梁山泊马军五虎将，呼延赞后人，使双鞭。原为汝宁郡都统制，善使两条水磨八棱钢鞭。奉旨攻打梁山时，被宋江设计擒获。感宋江义气，归顺梁山。征方腊后，被授御营兵马指挥使，后领大军破金国四皇子金兀术，出军杀至淮西阵亡。", favorite: false},
-{id: 9, name: "花荣", nickname: "小李广", rank: "天英星", avatar: "🏹", strength: 85, intelligence: 80, leadership: 78, loyalty: 95, category: "tiangang", weapon: "弓箭、银枪", birth: "青州", story: "梁山泊马军八骠骑，箭法高超，百步穿杨。原为青州清风寨武知寨，宋江的旧友。为救宋江大闹清风寨，投奔梁山。梁山排座次时排名第九，为马军八骠骑兼先锋使之首，善使银枪，箭法高超，百步穿杨，人称'小李广'。宋江被毒死后，与吴用一同在宋江墓前自缢身亡。", favorite: false},
-{id: 10, name: "柴进", nickname: "小旋风", rank: "天贵星", avatar: "🌀", strength: 75, intelligence: 85, leadership: 80, loyalty: 90, category: "tiangang", weapon: "长枪", birth: "沧州", story: "后周世宗柴荣嫡派子孙，仗义疏财，喜结交英雄。因祖上有陈桥让位之功，太祖武德皇帝敕赐丹书铁券。因高唐州知府高廉妻弟殷天锡仗势欺人，被李逵打死，柴进被连累入狱。后被梁山好汉救出，遂入伙梁山。征方腊时曾化名柯引，潜入方腊内部，娶金芝公主，与宋江里应外合，攻破清溪洞。后辞官回沧州为民，无疾而终。", favorite: false},
-{id: 11, name: "李应", nickname: "扑天雕", rank: "天富星", avatar: "🦅", strength: 88, intelligence: 82, leadership: 80, loyalty: 85, category: "tiangang", weapon: "浑铁点钢枪", birth: "郓州", story: "独龙岗李家庄庄主，飞刀绝技，后被逼上梁山。原为独龙岗李家庄庄主，与祝家庄、扈家庄结盟。宋江攻打祝家庄时，被吴用设计骗上梁山。后发觉中计，但家人已被接上山，只得入伙。征方腊后，被封为中山府郓城都统制，后称病辞官，回独龙岗继续做富豪。", favorite: false},
-{id: 12, name: "朱仝", nickname: "美髯公", rank: "天满星", avatar: "🧔", strength: 86, intelligence: 78, leadership: 76, loyalty: 92, category: "tiangang", weapon: "大刀", birth: "郓城", story: "原为郓城县马兵都头，面如重枣，目若朗星。曾义释晁盖、宋江。后因杀死欺负良家妇女的知府之子，被刺配沧州。因沧州知府喜爱，留在府中听用。为逼朱仝上山，李逵杀死知府之子小衙内，朱仝被迫上梁山。征方腊后，被封为保定府都统制，后随刘光世破金，升太平军节度使。", favorite: false},
-{id: 13, name: "鲁智深", nickname: "花和尚", rank: "天孤星", avatar: "🪷", strength: 96, intelligence: 70, leadership: 75, loyalty: 98, category: "tiangang", weapon: "水磨禅杖", birth: "渭州", story: "梁山泊步军头领，原名鲁达，三拳打死镇关西。本名鲁达，原为渭州经略府提辖，因三拳打死镇关西，为躲避官府缉捕便出家做了和尚，法名智深。后又因搭救林冲，流落江湖，与杨志、武松一同在二龙山落草。三山聚义后加入梁山泊，排第十三位，为步军头领。征方腊后于杭州六和寺圆寂，追赠义烈昭暨禅师。", favorite: true},
-{id: 14, name: "武松", nickname: "行者", rank: "天伤星", avatar: "🐅", strength: 98, intelligence: 75, leadership: 70, loyalty: 95, category: "tiangang", weapon: "戒刀", birth: "清河县", story: "梁山泊步军头领，景阳冈打虎英雄，为兄报仇杀西门庆。因其排行第二，又叫'武二郎'。景阳冈借酒醉打死猛虎而名扬天下，为哥哥武大郎报仇而杀死西门庆、潘金莲，被流放孟州。在孟州醉打蒋门神，血溅鸳鸯楼后，为躲避官府改作头陀打扮，故人称'行者武松'。征讨方腊时被飞刀所伤，痛失左臂，后在杭州六和寺出家，八十岁善终。", favorite: true},
-{id: 15, name: "董平", nickname: "双枪将", rank: "天立星", avatar: "🔫", strength: 94, intelligence: 75, leadership: 80, loyalty: 82, category: "tiangang", weapon: "双枪", birth: "上党", story: "梁山泊马军五虎将，英勇双枪将，风流万户侯。原为东平府兵马都监，善使双枪，有万夫不当之勇。宋江攻打东平府时，被扈三娘、孙二娘擒获。归顺梁山后，娶程万里之女为妻。征方腊时，被张韬在背后一刀砍死。", favorite: false},
-{id: 16, name: "张清", nickname: "没羽箭", rank: "天捷星", avatar: "💎", strength: 85, intelligence: 78, leadership: 76, loyalty: 88, category: "tiangang", weapon: "飞石", birth: "彰德府", story: "梁山泊马军八骠骑，善用飞石打人，百发百中。原为东昌府守将，善用飞石，连打梁山十五员大将。后被吴用设计擒获，归顺梁山。征方腊时，在独松关被厉天闰杀死。", favorite: false},
-{id: 17, name: "杨志", nickname: "青面兽", rank: "天暗星", avatar: "🎭", strength: 90, intelligence: 80, leadership: 78, loyalty: 85, category: "tiangang", weapon: "朴刀", birth: "关西", story: "杨家将后人，因脸上有青记得名，曾押运生辰纲。原为殿帅府制使，因失陷花石纲丢官。后在东京谋求复职不得，穷困卖刀，杀死泼皮牛二，被刺配大名府。得到梁中书的赏识，提拔为管军提辖使，奉命押送生辰纲，结果又被劫取，只得落草。三山聚义后加入梁山。征方腊时病逝于丹徒县。", favorite: false},
-{id: 18, name: "徐宁", nickname: "金枪手", rank: "天佑星", avatar: "🔱", strength: 88, intelligence: 82, leadership: 76, loyalty: 90, category: "tiangang", weapon: "钩镰枪", birth: "东京", story: "梁山泊马军八骠骑，金枪法、钩镰枪法天下独步。原为东京禁军金枪班教头，家传钩镰枪法。为破呼延灼的连环马，被表弟汤隆骗上梁山，教授钩镰枪法。征方腊时，在杭州被药箭射伤，最终不治身亡。", favorite: false},
-{id: 19, name: "索超", nickname: "急先锋", rank: "天速星", avatar: "⚡", strength: 89, intelligence: 70, leadership: 75, loyalty: 88, category: "tiangang", weapon: "金蘸斧", birth: "大名府", story: "梁山泊马军八骠骑，性急如火，每逢战斗必争先。原为大名府留守司正牌军，因性格急躁，上阵时总是一马当先，人称'急先锋'。与杨志比武时不分胜负，被梁中书提拔为管军提辖使。后随大名府军民归顺梁山。征方腊时，被石宝流星锤打死。", favorite: false},
-{id: 20, name: "戴宗", nickname: "神行太保", rank: "天速星", avatar: "👟", strength: 70, intelligence: 85, leadership: 72, loyalty: 92, category: "tiangang", weapon: "无", birth: "江州", story: "梁山泊总探声息头领，日行八百里，善神行法。原为江州两院押牢节级，有道术神行法，将四片神行甲马拴在腿上，最快能日行八百里。宋江题反诗后，奉命送信给蔡九知府，被黄文炳看破，与宋江一起被判死刑。后被梁山好汉劫法场救出，遂入伙梁山。征方腊后，被授兖州府都统制，后辞官到泰安州岳庙陪堂出家，大笑而终。", favorite: false},
-{id: 21, name: "刘唐", nickname: "赤发鬼", rank: "天异星", avatar: "👹", strength: 87, intelligence: 68, leadership: 70, loyalty: 90, category: "tiangang", weapon: "朴刀", birth: "东潞州", story: "梁山泊步军头领，因鬓边有朱砂记得名。原为东潞州人氏，自幼飘荡江湖，因鬓边有一搭朱砂记，人称'赤发鬼'。将生辰纲的消息告知晁盖，参与智取生辰纲。后随晁盖上梁山，为梁山早期头领之一。征方腊时，在杭州候潮门被闸板压死。", favorite: false},
-{id: 22, name: "李逵", nickname: "黑旋风", rank: "天杀星", avatar: "⚫", strength: 94, intelligence: 50, leadership: 60, loyalty: 99, category: "tiangang", weapon: "双斧", birth: "沂州", story: "梁山泊步军头领，鲁莽直率，使双斧，对宋江忠心耿耿。生得粗壮黝黑，绰号'黑旋风'。因为打死了人逃遇赦宥，被戴宗留在江州当牢子。为救宋江，李逵与众人大闹江州，上了梁山。惯使一双板斧，梁山排座次时位列第二十二位，是梁山第五位步军头领。宋江被毒死后，李逵亦被毒酒毒死，与宋江合葬于蓼儿洼。", favorite: false},
-{id: 23, name: "史进", nickname: "九纹龙", rank: "天微星", avatar: "🐉", strength: 88, intelligence: 72, leadership: 74, loyalty: 90, category: "tiangang", weapon: "三尖两刃刀", birth: "华州", story: "梁山泊马军八骠骑，因身上纹有九条青龙得名。原为史家庄少庄主，因身上纹有九条青龙，人称'九纹龙'。是水浒中第一个出场的梁山好汉。曾拜王进为师，学得一身武艺。因结识少华山好汉朱武等人，被官府追杀，烧了庄园，上少华山落草。后随少华山众归顺梁山。征方腊时，在昱岭关被庞万春射死。", favorite: false},
-{id: 24, name: "穆弘", nickname: "没遮拦", rank: "天究星", avatar: "🛡️", strength: 86, intelligence: 70, leadership: 72, loyalty: 88, category: "tiangang", weapon: "朴刀", birth: "揭阳镇", story: "梁山泊马军八骠骑，揭阳镇一霸，武艺高强。原为揭阳镇富户，与弟弟穆春称霸揭阳镇，人称'没遮拦'。宋江发配江州时，在揭阳镇得罪穆氏兄弟，被追杀。后宋江在浔阳楼题反诗，穆弘参与劫法场，上梁山入伙。征方腊时，在杭州感染瘟疫病故。", favorite: false},
-{id: 25, name: "雷横", nickname: "插翅虎", rank: "天退星", avatar: "🐯", strength: 87, intelligence: 68, leadership: 70, loyalty: 85, category: "tiangang", weapon: "朴刀", birth: "郓城", story: "梁山泊步军头领，原为郓城县步兵都头。原为郓城县步兵都头，膂力过人，能跳过二三丈宽的山涧，人称'插翅虎'。因母亲受辱，打死知县相好白秀英，被朱仝放走，上梁山入伙。征方腊时，在德清县被司行方砍死。", favorite: false},
-{id: 26, name: "李俊", nickname: "混江龙", rank: "天寿星", avatar: "🐲", strength: 85, intelligence: 82, leadership: 84, loyalty: 90, category: "tiangang", weapon: "短刀", birth: "庐州", story: "梁山泊水军头领，精通水性，后成为暹罗国王。原为扬子江艄公，精通水性，人称'混江龙'。宋江发配江州时，与李俊结识。后参与劫法场，上梁山入伙。征方腊后，诈病归隐，与童威、童猛出海，最终成为暹罗国主。", favorite: false},
-{id: 27, name: "阮小二", nickname: "立地太岁", rank: "天剑星", avatar: "🗡️", strength: 84, intelligence: 75, leadership: 78, loyalty: 92, category: "tiangang", weapon: "短刀", birth: "济州", story: "梁山泊水军头领，阮氏三雄老大，石碣村渔民。原为石碣村渔民，与弟弟阮小五、阮小七合称'阮氏三雄'。参与智取生辰纲，后随晁盖上梁山，是梁山早期头领之一。征方腊时，在乌龙岭兵败自刎。", favorite: false},
-{id: 28, name: "张横", nickname: "船火儿", rank: "天平星", avatar: "🚤", strength: 83, intelligence: 72, leadership: 74, loyalty: 88, category: "tiangang", weapon: "短刀", birth: "江州", story: "梁山泊水军头领，浔阳江上劫财的船公。原为浔阳江艄公，与其弟张顺在江上做私渡，常在摆渡到江心时杀人劫财，人称'船火儿'。宋江发配江州时，差点被张横所害，得李俊相救。后参与劫法场，上梁山入伙。征方腊时，在杭州感染瘟疫病故。", favorite: false},
-{id: 29, name: "阮小五", nickname: "短命二郎", rank: "天罪星", avatar: "⚓", strength: 85, intelligence: 70, leadership: 76, loyalty: 90, category: "tiangang", weapon: "短刀", birth: "济州", story: "梁山泊水军头领，阮氏三雄老二，勇猛过人。原为石碣村渔民，阮氏三雄之一，参与智取生辰纲，后随晁盖上梁山。征方腊时，在清溪县被娄敏中杀死。", favorite: false},
-{id: 30, name: "张顺", nickname: "浪里白条", rank: "天损星", avatar: "🌊", strength: 82, intelligence: 78, leadership: 76, loyalty: 92, category: "tiangang", weapon: "短刀", birth: "江州", story: "梁山泊水军头领，张横弟弟，水下功夫了得。原为浔阳江渔牙主人，浑身雪练也似一身白肉，在水下可伏七天七夜，穿梭水面快速无比，人称'浪里白条'。宋江发配江州时，与张顺结识。后参与劫法场，上梁山入伙。征方腊时，在杭州涌金门被乱箭射死。", favorite: false},
-{id: 31, name: "阮小七", nickname: "活阎罗", rank: "天败星", avatar: "☠️", strength: 86, intelligence: 68, leadership: 74, loyalty: 90, category: "tiangang", weapon: "短刀", birth: "济州", story: "梁山泊水军头领，阮氏三雄老三，性情刚烈。原为石碣村渔民，阮氏三雄之一，参与智取生辰纲，后随晁盖上梁山。征方腊后，因穿方腊龙袍戏耍，被削职为民，回石碣村打渔为生，寿至六十而终。", favorite: false},
-{id: 32, name: "杨雄", nickname: "病关索", rank: "天牢星", avatar: "🏮", strength: 87, intelligence: 75, leadership: 74, loyalty: 88, category: "tiangang", weapon: "朴刀", birth: "河南", story: "梁山泊步军头领，原为蓟州押狱兼行刑刽子手。原为蓟州押狱兼行刑刽子手，因面色微黄，人称'病关索'。妻子潘巧云与和尚裴如海通奸，被石秀告知，杀死潘巧云和丫鬟，与石秀投奔梁山。征方腊后，背上疮发而死。", favorite: false},
-{id: 33, name: "石秀", nickname: "拼命三郎", rank: "天慧星", avatar: "💪", strength: 88, intelligence: 78, leadership: 72, loyalty: 92, category: "tiangang", weapon: "棍棒", birth: "金陵", story: "梁山泊步军头领，为人仗义，好打抱不平。原为金陵建康府人氏，随叔父到蓟州贩卖羊马，叔父病死，消折了本钱，流落蓟州卖柴为生。因路见不平，便要舍命相助，人称'拼命三郎'。发现杨雄妻子潘巧云与和尚通奸，告知杨雄，后与杨雄杀死奸夫淫妇，投奔梁山。征方腊时，在昱岭关被乱箭射死。", favorite: false},
-{id: 34, name: "解珍", nickname: "两头蛇", rank: "天暴星", avatar: "🐍", strength: 85, intelligence: 70, leadership: 72, loyalty: 90, category: "tiangang", weapon: "钢叉", birth: "登州", story: "梁山泊步军头领，猎户出身，与解宝是兄弟。原为登州猎户，因猎虎被毛太公陷害入狱。顾大嫂、孙新劫狱，救出解氏兄弟，一起投奔梁山。征方腊时，在乌龙岭攀爬悬崖时被敌军发现，砍断绳索摔死。", favorite: false},
-{id: 35, name: "解宝", nickname: "双尾蝎", rank: "天哭星", avatar: "🦂", strength: 86, intelligence: 68, leadership: 70, loyalty: 92, category: "tiangang", weapon: "钢叉", birth: "登州", story: "梁山泊步军头领，猎户出身，解珍弟弟。与兄长解珍同为登州猎户，武艺比哥哥更高。被毛太公陷害入狱，被顾大嫂等人救出，一起投奔梁山。征方腊时，在乌龙岭被滚石砸死。", favorite: false},
-{id: 36, name: "燕青", nickname: "浪子", rank: "天巧星", avatar: "🎭", strength: 84, intelligence: 88, leadership: 78, loyalty: 95, category: "tiangang", weapon: "弩箭", birth: "北京", story: "卢俊义家仆，多才多艺，弩箭、相扑、吹弹唱舞样样精通。原为北京人氏，自幼父母双亡，被卢俊义收养，吹拉弹唱、相扑射箭样样精通，人称'浪子'。多次救卢俊义于危难之中。征方腊后，劝卢俊义隐退未成，独自隐退，不知所终。", favorite: true},
+{id: 1, name: "宋江", nickname: "及时雨", rank: "天魁星", avatar: "👑", strength: 72, intelligence: 90, leadership: 98, loyalty: 95, category: "tiangang", weapon: "朴刀、宝剑", birth: "山东郓城", story: "梁山泊总兵都头领，原为郓城县押司，仗义疏财，人称'及时雨'。", favorite: false},
+{id: 2, name: "卢俊义", nickname: "玉麒麟", rank: "天罡星", avatar: "🦄", strength: 97, intelligence: 85, leadership: 90, loyalty: 92, category: "tiangang", weapon: "麒麟黄金矛", birth: "北京大名府", story: "梁山泊副总兵都头领，棍棒天下无双，河北三绝之一。", favorite: false},
+{id: 3, name: "吴用", nickname: "智多星", rank: "天机星", avatar: "🎓", strength: 62, intelligence: 98, leadership: 88, loyalty: 90, category: "tiangang", weapon: "铜链、羽扇", birth: "山东郓城", story: "梁山泊掌管机密军师，足智多谋，曾智取生辰纲。", favorite: false},
+{id: 4, name: "公孙胜", nickname: "入云龙", rank: "天闲星", avatar: "🐉", strength: 80, intelligence: 92, leadership: 75, loyalty: 85, category: "tiangang", weapon: "松纹古铜剑", birth: "蓟州", story: "梁山泊掌管机密军师，道术高深，能呼风唤雨。", favorite: false},
+{id: 5, name: "关胜", nickname: "大刀", rank: "天勇星", avatar: "⚔️", strength: 95, intelligence: 80, leadership: 85, loyalty: 90, category: "tiangang", weapon: "青龙偃月刀", birth: "蒲东", story: "梁山泊马军五虎将之首，关羽后人，使青龙偃月刀。", favorite: false},
+{id: 6, name: "林冲", nickname: "豹子头", rank: "天雄星", avatar: "🐆", strength: 94, intelligence: 82, leadership: 88, loyalty: 92, category: "tiangang", weapon: "丈八蛇矛", birth: "东京", story: "梁山泊马军五虎将，原为八十万禁军教头，被逼上梁山。", favorite: true},
+{id: 7, name: "秦明", nickname: "霹雳火", rank: "天猛星", avatar: "🔥", strength: 92, intelligence: 70, leadership: 80, loyalty: 85, category: "tiangang", weapon: "狼牙棒", birth: "山后开州", story: "梁山泊马军五虎将，性如烈火，使狼牙棒。", favorite: false},
+{id: 8, name: "呼延灼", nickname: "双鞭", rank: "天威星", avatar: "⚡", strength: 93, intelligence: 78, leadership: 84, loyalty: 88, category: "tiangang", weapon: "双鞭", birth: "河东", story: "梁山泊马军五虎将，呼延赞后人，使双鞭。", favorite: false},
+{id: 9, name: "花荣", nickname: "小李广", rank: "天英星", avatar: "🏹", strength: 85, intelligence: 80, leadership: 78, loyalty: 95, category: "tiangang", weapon: "弓箭、银枪", birth: "青州", story: "梁山泊马军八骠骑，箭法高超，百步穿杨。", favorite: false},
+{id: 10, name: "柴进", nickname: "小旋风", rank: "天贵星", avatar: "🌀", strength: 75, intelligence: 85, leadership: 80, loyalty: 90, category: "tiangang", weapon: "长枪", birth: "沧州", story: "后周世宗柴荣嫡派子孙，仗义疏财，喜结交英雄。", favorite: false},
+{id: 11, name: "李应", nickname: "扑天雕", rank: "天富星", avatar: "🦅", strength: 88, intelligence: 82, leadership: 80, loyalty: 85, category: "tiangang", weapon: "浑铁点钢枪", birth: "郓州", story: "独龙岗李家庄庄主，飞刀绝技，后被逼上梁山。", favorite: false},
+{id: 12, name: "朱仝", nickname: "美髯公", rank: "天满星", avatar: "🧔", strength: 86, intelligence: 78, leadership: 76, loyalty: 92, category: "tiangang", weapon: "大刀", birth: "郓城", story: "原为郓城县马兵都头，面如重枣，目若朗星。", favorite: false},
+{id: 13, name: "鲁智深", nickname: "花和尚", rank: "天孤星", avatar: "🪷", strength: 96, intelligence: 70, leadership: 75, loyalty: 98, category: "tiangang", weapon: "水磨禅杖", birth: "渭州", story: "梁山泊步军头领，原名鲁达，三拳打死镇关西。", favorite: true},
+{id: 14, name: "武松", nickname: "行者", rank: "天伤星", avatar: "🐅", strength: 98, intelligence: 75, leadership: 70, loyalty: 95, category: "tiangang", weapon: "戒刀", birth: "清河县", story: "梁山泊步军头领，景阳冈打虎英雄，为兄报仇杀西门庆。", favorite: true},
+{id: 15, name: "董平", nickname: "双枪将", rank: "天立星", avatar: "🔫", strength: 94, intelligence: 75, leadership: 80, loyalty: 82, category: "tiangang", weapon: "双枪", birth: "上党", story: "梁山泊马军五虎将，英勇双枪将，风流万户侯。", favorite: false},
+{id: 16, name: "张清", nickname: "没羽箭", rank: "天捷星", avatar: "💎", strength: 85, intelligence: 78, leadership: 76, loyalty: 88, category: "tiangang", weapon: "飞石", birth: "彰德府", story: "梁山泊马军八骠骑，善用飞石打人，百发百中。", favorite: false},
+{id: 17, name: "杨志", nickname: "青面兽", rank: "天暗星", avatar: "🎭", strength: 90, intelligence: 80, leadership: 78, loyalty: 85, category: "tiangang", weapon: "朴刀", birth: "关西", story: "杨家将后人，因脸上有青记得名，曾押运生辰纲。", favorite: false},
+{id: 18, name: "徐宁", nickname: "金枪手", rank: "天佑星", avatar: "🔱", strength: 88, intelligence: 82, leadership: 76, loyalty: 90, category: "tiangang", weapon: "钩镰枪", birth: "东京", story: "梁山泊马军八骠骑，金枪法、钩镰枪法天下独步。", favorite: false},
+{id: 19, name: "索超", nickname: "急先锋", rank: "天速星", avatar: "⚡", strength: 89, intelligence: 70, leadership: 75, loyalty: 88, category: "tiangang", weapon: "金蘸斧", birth: "大名府", story: "梁山泊马军八骠骑，性急如火，每逢战斗必争先。", favorite: false},
+{id: 20, name: "戴宗", nickname: "神行太保", rank: "天速星", avatar: "👟", strength: 70, intelligence: 85, leadership: 72, loyalty: 92, category: "tiangang", weapon: "无", birth: "江州", story: "梁山泊总探声息头领，日行八百里，善神行法。", favorite: false},
+{id: 21, name: "刘唐", nickname: "赤发鬼", rank: "天异星", avatar: "👹", strength: 87, intelligence: 68, leadership: 70, loyalty: 90, category: "tiangang", weapon: "朴刀", birth: "东潞州", story: "梁山泊步军头领，因鬓边有朱砂记得名。", favorite: false},
+{id: 22, name: "李逵", nickname: "黑旋风", rank: "天杀星", avatar: "⚫", strength: 94, intelligence: 50, leadership: 60, loyalty: 99, category: "tiangang", weapon: "双斧", birth: "沂州", story: "梁山泊步军头领，鲁莽直率，使双斧，对宋江忠心耿耿。", favorite: false},
+{id: 23, name: "史进", nickname: "九纹龙", rank: "天微星", avatar: "🐉", strength: 88, intelligence: 72, leadership: 74, loyalty: 90, category: "tiangang", weapon: "三尖两刃刀", birth: "华州", story: "梁山泊马军八骠骑，因身上纹有九条青龙得名。", favorite: false},
+{id: 24, name: "穆弘", nickname: "没遮拦", rank: "天究星", avatar: "🛡️", strength: 86, intelligence: 70, leadership: 72, loyalty: 88, category: "tiangang", weapon: "朴刀", birth: "揭阳镇", story: "梁山泊马军八骠骑，揭阳镇一霸，武艺高强。", favorite: false},
+{id: 25, name: "雷横", nickname: "插翅虎", rank: "天退星", avatar: "🐯", strength: 87, intelligence: 68, leadership: 70, loyalty: 85, category: "tiangang", weapon: "朴刀", birth: "郓城", story: "梁山泊步军头领，原为郓城县步兵都头。", favorite: false},
+{id: 26, name: "李俊", nickname: "混江龙", rank: "天寿星", avatar: "🐲", strength: 85, intelligence: 82, leadership: 84, loyalty: 90, category: "tiangang", weapon: "短刀", birth: "庐州", story: "梁山泊水军头领，精通水性，后成为暹罗国王。", favorite: false},
+{id: 27, name: "阮小二", nickname: "立地太岁", rank: "天剑星", avatar: "🗡️", strength: 84, intelligence: 75, leadership: 78, loyalty: 92, category: "tiangang", weapon: "短刀", birth: "济州", story: "梁山泊水军头领，阮氏三雄老大，石碣村渔民。", favorite: false},
+{id: 28, name: "张横", nickname: "船火儿", rank: "天平星", avatar: "🚤", strength: 83, intelligence: 72, leadership: 74, loyalty: 88, category: "tiangang", weapon: "短刀", birth: "江州", story: "梁山泊水军头领，浔阳江上劫财的船公。", favorite: false},
+{id: 29, name: "阮小五", nickname: "短命二郎", rank: "天罪星", avatar: "⚓", strength: 85, intelligence: 70, leadership: 76, loyalty: 90, category: "tiangang", weapon: "短刀", birth: "济州", story: "梁山泊水军头领，阮氏三雄老二，勇猛过人。", favorite: false},
+{id: 30, name: "张顺", nickname: "浪里白条", rank: "天损星", avatar: "🌊", strength: 82, intelligence: 78, leadership: 76, loyalty: 92, category: "tiangang", weapon: "短刀", birth: "江州", story: "梁山泊水军头领，张横弟弟，水下功夫了得。", favorite: false},
+{id: 31, name: "阮小七", nickname: "活阎罗", rank: "天败星", avatar: "☠️", strength: 86, intelligence: 68, leadership: 74, loyalty: 90, category: "tiangang", weapon: "短刀", birth: "济州", story: "梁山泊水军头领，阮氏三雄老三，性情刚烈。", favorite: false},
+{id: 32, name: "杨雄", nickname: "病关索", rank: "天牢星", avatar: "🏮", strength: 87, intelligence: 75, leadership: 74, loyalty: 88, category: "tiangang", weapon: "朴刀", birth: "河南", story: "梁山泊步军头领，原为蓟州押狱兼行刑刽子手。", favorite: false},
+{id: 33, name: "石秀", nickname: "拼命三郎", rank: "天慧星", avatar: "💪", strength: 88, intelligence: 78, leadership: 72, loyalty: 92, category: "tiangang", weapon: "棍棒", birth: "金陵", story: "梁山泊步军头领，为人仗义，好打抱不平。", favorite: false},
+{id: 34, name: "解珍", nickname: "两头蛇", rank: "天暴星", avatar: "🐍", strength: 85, intelligence: 70, leadership: 72, loyalty: 90, category: "tiangang", weapon: "钢叉", birth: "登州", story: "梁山泊步军头领，猎户出身，与解宝是兄弟。", favorite: false},
+{id: 35, name: "解宝", nickname: "双尾蝎", rank: "天哭星", avatar: "🦂", strength: 86, intelligence: 68, leadership: 70, loyalty: 92, category: "tiangang", weapon: "钢叉", birth: "登州", story: "梁山泊步军头领，猎户出身，解珍弟弟。", favorite: false},
+{id: 36, name: "燕青", nickname: "浪子", rank: "天巧星", avatar: "🎭", strength: 84, intelligence: 88, leadership: 78, loyalty: 95, category: "tiangang", weapon: "弩箭", birth: "北京", story: "卢俊义家仆，多才多艺，弩箭、相扑、吹弹唱舞样样精通。", favorite: true},
 
-// 地煞星72员（精选部分展示）
-{id: 37, name: "朱武", nickname: "神机军师", rank: "地魁星", avatar: "🎲", strength: 68, intelligence: 90, leadership: 82, loyalty: 88, category: "dishai", weapon: "双刀", birth: "定远", story: "梁山泊副军师，精通阵法，神机妙算。原为少华山头领，精通阵法，广有谋略。陈达被史进擒获后，朱武与杨春用苦肉计自缚请降，感动史进，三人结为好友。后随少华山众归顺梁山。征方腊后，授武奕郎都统领，后随公孙胜出家。", favorite: false},
-{id: 38, name: "黄信", nickname: "镇三山", rank: "地煞星", avatar: "🏔️", strength: 82, intelligence: 72, leadership: 76, loyalty: 85, category: "dishai", weapon: "丧门剑", birth: "青州", story: "秦明徒弟，原为青州兵马都监。原为青州兵马都监，武艺高强，自称能镇住青州境内清风山、二龙山、桃花山三座恶山，人称'镇三山'。秦明被擒后，黄信也被设计擒获，随秦明归顺梁山。征方腊后，回青州任职。", favorite: false},
-{id: 39, name: "孙立", nickname: "病尉迟", rank: "地勇星", avatar: "🛡️", strength: 88, intelligence: 78, leadership: 80, loyalty: 85, category: "dishai", weapon: "长枪", birth: "琼州", story: "原为登州兵马提辖，武艺高强。原为登州兵马提辖，武艺高强，因其兄长被毛太公陷害，与弟媳顾大嫂等劫狱救人，投奔梁山。为作入伙之礼，打入祝家庄内部，与梁山里应外合攻破祝家庄。征方腊后，回登州任职。", favorite: false},
-{id: 40, name: "宣赞", nickname: "丑郡马", rank: "地杰星", avatar: "👹", strength: 84, intelligence: 70, leadership: 74, loyalty: 88, category: "dishai", weapon: "钢刀", birth: "东京", story: "相貌丑陋，郡主丈夫，善使连珠箭。原为东京衙门防御使保义，因相貌丑陋，郡主怀恨而死，不得重用。曾斗赢番将，被王爷招为郡马，人称'丑郡马'。推荐关胜征剿梁山，后随关胜归顺梁山。征方腊时，在苏州与郭世广鏖战，同归于尽。", favorite: false},
-{id: 41, name: "郝思文", nickname: "井木犴", rank: "地雄星", avatar: "🐺", strength: 85, intelligence: 75, leadership: 76, loyalty: 86, category: "dishai", weapon: "长枪", birth: "关胜结义兄弟", story: "关胜结义兄弟，十八般武艺样样精通。原为关胜结义兄弟，精通十八般武艺。随关胜征剿梁山，被扈三娘生擒，归顺梁山。因其母梦见井木犴投胎，故此人称'井木犴'。征方腊时，在杭州被生擒，遭方天定碎剐而死。", favorite: false},
-{id: 42, name: "韩滔", nickname: "百胜将", rank: "地威星", avatar: "🏆", strength: 83, intelligence: 72, leadership: 75, loyalty: 85, category: "dishai", weapon: "枣木槊", birth: "东京", story: "原为陈州团练使，使枣木槊。原为陈州团练使，武举出身，使一条枣木槊，人称'百胜将'。随呼延灼征剿梁山，被刘唐、杜迁擒获，归顺梁山。征方腊时，在常州被张近仁杀死。", favorite: false},
-{id: 43, name: "彭玘", nickname: "天目将", rank: "地英星", avatar: "👁️", strength: 82, intelligence: 70, leadership: 74, loyalty: 84, category: "dishai", weapon: "三尖两刃刀", birth: "东京", story: "原为颍州团练使，与韩滔一起征讨梁山。原为颍州团练使，使三尖两刃刀，人称'天目将'。随呼延灼征剿梁山，被扈三娘生擒，归顺梁山。征方腊时，在常州为给韩滔报仇，被张近仁杀死。", favorite: false},
-{id: 44, name: "单廷珪", nickname: "圣水将", rank: "地奇星", avatar: "💧", strength: 81, intelligence: 75, leadership: 76, loyalty: 85, category: "dishai", weapon: "长枪", birth: "凌州", story: "善用水攻，与魏定国合称'水火二将'。原为凌州团练使，善用淡水浸兵之法，人称'圣水将'。与魏定国奉命征剿梁山，被关胜说降，归顺梁山。征方腊时，在歙州陷入坑中，被乱枪戳死。", favorite: false},
-{id: 45, name: "魏定国", nickname: "神火将", rank: "地猛星", avatar: "🔥", strength: 82, intelligence: 74, leadership: 77, loyalty: 86, category: "dishai", weapon: "熟铜刀", birth: "凌州", story: "善用火攻，与单廷珪合称'水火二将'。原为凌州团练使，精熟火攻之法，人称'神火将'。与单廷珪奉命征剿梁山，被关胜说降，归顺梁山。征方腊时，在歙州陷入坑中，被乱枪戳死。", favorite: false},
-{id: 46, name: "萧让", nickname: "圣手书生", rank: "地文星", avatar: "✍️", strength: 60, intelligence: 88, leadership: 68, loyalty: 90, category: "dishai", weapon: "无", birth: "济州", story: "书法大家，能模仿各家字迹。原为济州秀才，会写诸家字体，人称'圣手书生'。为救宋江，吴用设计将其骗上梁山，伪造蔡京书信。征方腊前，被蔡京留于府中任门馆先生。", favorite: false},
-{id: 47, name: "裴宣", nickname: "铁面孔目", rank: "地正星", avatar: "⚖️", strength: 65, intelligence: 85, leadership: 70, loyalty: 92, category: "dishai", weapon: "双剑", birth: "京兆府", story: "原为六案孔目，为人正直，铁面无私。原为京兆府六案孔目，为人正直，因得罪知府被刺配沙门岛，被邓飞、孟康所救，上饮马川落草。后随饮马川众归顺梁山，掌管定功赏罚军政司。征方腊后，回饮马川求闲。", favorite: false},
-{id: 48, name: "欧鹏", nickname: "摩云金翅", rank: "地阔星", avatar: "🦅", strength: 83, intelligence: 70, leadership: 74, loyalty: 86, category: "dishai", weapon: "铁枪", birth: "黄州", story: "军户出身，行走如飞，人称'摩云金翅'。原为黄州人氏，军户出身，因恶了本官，逃走在江湖上，后上黄门山落草。宋江路过黄门山时，与蒋敬、马麟、陶宗旺一起归顺梁山。征方腊时，在歙州被庞万春射死。", favorite: false},
-{id: 49, name: "邓飞", nickname: "火眼狻猊", rank: "地阖星", avatar: "🦁", strength: 84, intelligence: 68, leadership: 72, loyalty: 88, category: "dishai", weapon: "铁链", birth: "襄阳府", story: "因双眼红赤得名，善使铁链。原为襄阳府人氏，因双眼红赤，江湖人称'火眼狻猊'。在饮马川落草，救下裴宣，让位给裴宣。后随饮马川众归顺梁山。征方腊时，在杭州为救索超，被石宝一刀砍死。", favorite: false},
-{id: 50, name: "燕顺", nickname: "锦毛虎", rank: "地强星", avatar: "🐯", strength: 82, intelligence: 66, leadership: 70, loyalty: 85, category: "dishai", weapon: "朴刀", birth: "莱州", story: "原为清风山大寨主，因生得赤发黄须得名。原为山东莱州人氏，羊马贩子出身，因消折本钱，流落绿林，在清风山落草。宋江路过清风山时，被燕顺所救。后随清风山众归顺梁山。征方腊时，在乌龙岭被石宝流星锤打死。", favorite: false},
-{id: 51, name: "杨林", nickname: "锦豹子", rank: "地暗星", avatar: "🐆", strength: 80, intelligence: 72, leadership: 70, loyalty: 88, category: "dishai", weapon: "长枪", birth: "彰德府", story: "原为绿林好汉，后投奔梁山。原为彰德府人氏，多在绿林丛中安身，与公孙胜有一面之识。经戴宗引荐上梁山。征方腊后，不愿为官，回饮马川求闲。", favorite: false},
-{id: 52, name: "凌振", nickname: "轰天雷", rank: "地轴星", avatar: "💣", strength: 70, intelligence: 85, leadership: 72, loyalty: 90, category: "dishai", weapon: "火炮", birth: "燕陵", story: "火炮专家，能造各种火炮，号称'宋朝天下第一炮手'。原为东京甲仗库副使炮手，善造火炮，能打十四五里远。随呼延灼征剿梁山，被阮小二生擒，归顺梁山。征方腊后，授火药局御营任用。", favorite: false},
-{id: 53, name: "蒋敬", nickname: "神算子", rank: "地会星", avatar: "🧮", strength: 62, intelligence: 88, leadership: 68, loyalty: 90, category: "dishai", weapon: "无", birth: "潭州", story: "原为落科举子，精通书算，能'积万累千，纤毫不差'。原为潭州人氏，落科举子出身，精通书算，能在'积万累千，纤毫不差'。在黄门山落草，后随黄门山众归顺梁山，掌管钱粮支出纳入。征方腊后，回潭州为民。", favorite: false},
-{id: 54, name: "吕方", nickname: "小温侯", rank: "地佐星", avatar: "🔱", strength: 83, intelligence: 70, leadership: 72, loyalty: 88, category: "dishai", weapon: "方天画戟", birth: "潭州", story: "因崇拜吕布而学使方天画戟，人称'小温侯'。原为潭州人氏，因贩生药到山东消折本钱，不能还乡，在对影山落草。与郭盛争斗时，被花荣一箭分开，两人遂一起归顺梁山。征方腊时，在乌龙岭与白钦争斗，一同滚落山崖而死。", favorite: false},
-{id: 55, name: "郭盛", nickname: "赛仁贵", rank: "地佑星", avatar: "🏹", strength: 82, intelligence: 68, leadership: 70, loyalty: 86, category: "dishai", weapon: "方天戟", birth: "西川嘉陵", story: "因崇拜薛仁贵而学使方天画戟，与吕方是搭档。原为四川嘉陵人氏，因贩水银货卖，在黄河遭风翻了船，回乡不得，在对影山落草。与吕方争斗时，被花荣一箭分开，两人遂一起归顺梁山。征方腊时，在乌龙岭被滚石砸死。", favorite: false},
-{id: 56, name: "安道全", nickname: "神医", rank: "地灵星", avatar: "💊", strength: 58, intelligence: 90, leadership: 65, loyalty: 92, category: "dishai", weapon: "无", birth: "建康府", story: "神医，曾治愈宋江背疮，医术高明。原为建康府医生，医术高明，人称'神医'。宋江患背疮，张顺请安道全上梁山医治。后安道全被留于梁山。征方腊前，被宋廷调回东京，任太医院金紫医官。", favorite: false},
-{id: 57, name: "皇甫端", nickname: "紫髯伯", rank: "地兽星", avatar: "🐎", strength: 65, intelligence: 82, leadership: 70, loyalty: 90, category: "dishai", weapon: "无", birth: "幽州", story: "兽医，善医马匹，因生得碧眼黄须得名。原为幽州人氏，碧眼黄须，貌若番人，善医马匹，人称'紫髯伯'。经张清推荐上梁山。征方腊前，被宋廷留用，任御马监太使。", favorite: false},
-{id: 58, name: "王英", nickname: "矮脚虎", rank: "地微星", avatar: "🐯", strength: 78, intelligence: 60, leadership: 65, loyalty: 80, category: "dishai", weapon: "长枪", birth: "两淮", story: "因身材矮小得名，原为清风山二寨主，好色但勇猛。原为两淮人氏，车家出身，因半路见财起意，劫了客人，事发入狱，越狱后上清风山落草。宋江路过清风山时，欲娶刘高之妻，被宋江劝阻。后三打祝家庄时，生擒扈三娘，宋江作主将扈三娘许配给他。征方腊时，在睦州被郑彪杀死。", favorite: false},
-{id: 59, name: "扈三娘", nickname: "一丈青", rank: "地慧星", avatar: "🌸", strength: 86, intelligence: 75, leadership: 78, loyalty: 88, category: "dishai", weapon: "日月双刀", birth: "扈家庄", story: "梁山三位女将之一，武艺高强，使日月双刀，后嫁王英。原为扈家庄大小姐，与祝家庄联盟。三打祝家庄时，被林冲生擒，由宋江作主嫁与王英。征方腊时，在睦州为救王英，被郑彪用铜砖打死。", favorite: true},
-{id: 60, name: "鲍旭", nickname: "丧门神", rank: "地暴星", avatar: "☠️", strength: 87, intelligence: 62, leadership: 70, loyalty: 85, category: "dishai", weapon: "阔剑", birth: "寇州", story: "原为枯树山强人，生性凶悍，嗜杀成性。原为寇州人氏，在枯树山落草，平生只好杀人。李逵路过枯树山时，与鲍旭结识，一起攻打凌州，后归顺梁山。征方腊时，在杭州被石宝一刀砍死。", favorite: false},
-// 由于篇幅限制，这里只展示前60位好汉，实际代码中应该有108位
-// 其余好汉数据类似...
+// 地煞星72员（部分示例）
+{id: 37, name: "朱武", nickname: "神机军师", rank: "地魁星", avatar: "🎲", strength: 68, intelligence: 90, leadership: 82, loyalty: 88, category: "dishai", weapon: "双刀", birth: "定远", story: "梁山泊副军师，精通阵法，神机妙算。", favorite: false},
+{id: 38, name: "黄信", nickname: "镇三山", rank: "地煞星", avatar: "🏔️", strength: 82, intelligence: 72, leadership: 76, loyalty: 85, category: "dishai", weapon: "丧门剑", birth: "青州", story: "秦明徒弟，原为青州兵马都监。", favorite: false},
+{id: 39, name: "孙立", nickname: "病尉迟", rank: "地勇星", avatar: "🛡️", strength: 88, intelligence: 78, leadership: 80, loyalty: 85, category: "dishai", weapon: "长枪", birth: "琼州", story: "原为登州兵马提辖，武艺高强。", favorite: false},
+{id: 40, name: "宣赞", nickname: "丑郡马", rank: "地杰星", avatar: "👹", strength: 84, intelligence: 70, leadership: 74, loyalty: 88, category: "dishai", weapon: "钢刀", birth: "东京", story: "相貌丑陋，郡主丈夫，善使连珠箭。", favorite: false},
+{id: 41, name: "郝思文", nickname: "井木犴", rank: "地雄星", avatar: "🐺", strength: 85, intelligence: 75, leadership: 76, loyalty: 86, category: "dishai", weapon: "长枪", birth: "关胜结义兄弟", story: "关胜结义兄弟，十八般武艺样样精通。", favorite: false},
+{id: 42, name: "韩滔", nickname: "百胜将", rank: "地威星", avatar: "🏆", strength: 83, intelligence: 72, leadership: 75, loyalty: 85, category: "dishai", weapon: "枣木槊", birth: "东京", story: "原为陈州团练使，使枣木槊。", favorite: false},
+{id: 43, name: "彭玘", nickname: "天目将", rank: "地英星", avatar: "👁️", strength: 82, intelligence: 70, leadership: 74, loyalty: 84, category: "dishai", weapon: "三尖两刃刀", birth: "东京", story: "原为颍州团练使，与韩滔一起征讨梁山。", favorite: false},
+{id: 44, name: "单廷珪", nickname: "圣水将", rank: "地奇星", avatar: "💧", strength: 81, intelligence: 75, leadership: 76, loyalty: 85, category: "dishai", weapon: "长枪", birth: "凌州", story: "善用水攻，与魏定国合称'水火二将'。", favorite: false},
+{id: 45, name: "魏定国", nickname: "神火将", rank: "地猛星", avatar: "🔥", strength: 82, intelligence: 74, leadership: 77, loyalty: 86, category: "dishai", weapon: "熟铜刀", birth: "凌州", story: "善用火攻，与单廷珪合称'水火二将'。", favorite: false},
+{id: 46, name: "萧让", nickname: "圣手书生", rank: "地文星", avatar: "✍️", strength: 60, intelligence: 88, leadership: 68, loyalty: 90, category: "dishai", weapon: "无", birth: "济州", story: "书法大家，能模仿各家字迹。", favorite: false},
+{id: 47, name: "裴宣", nickname: "铁面孔目", rank: "地正星", avatar: "⚖️", strength: 65, intelligence: 85, leadership: 70, loyalty: 92, category: "dishai", weapon: "双剑", birth: "京兆府", story: "原为六案孔目，为人正直，铁面无私。", favorite: false},
+{id: 48, name: "欧鹏", nickname: "摩云金翅", rank: "地阔星", avatar: "🦅", strength: 83, intelligence: 70, leadership: 74, loyalty: 86, category: "dishai", weapon: "铁枪", birth: "黄州", story: "军户出身，行走如飞，人称'摩云金翅'。", favorite: false},
+{id: 49, name: "邓飞", nickname: "火眼狻猊", rank: "地阖星", avatar: "🦁", strength: 84, intelligence: 68, leadership: 72, loyalty: 88, category: "dishai", weapon: "铁链", birth: "襄阳府", story: "因双眼红赤得名，善使铁链。", favorite: false},
+{id: 50, name: "燕顺", nickname: "锦毛虎", rank: "地强星", avatar: "🐯", strength: 82, intelligence: 66, leadership: 70, loyalty: 85, category: "dishai", weapon: "朴刀", birth: "莱州", story: "原为清风山大寨主，因生得赤发黄须得名。", favorite: false},
+{id: 51, name: "杨林", nickname: "锦豹子", rank: "地暗星", avatar: "🐆", strength: 80, intelligence: 72, leadership: 70, loyalty: 88, category: "dishai", weapon: "长枪", birth: "彰德府", story: "原为绿林好汉，后投奔梁山。", favorite: false},
+{id: 52, name: "凌振", nickname: "轰天雷", rank: "地轴星", avatar: "💣", strength: 70, intelligence: 85, leadership: 72, loyalty: 90, category: "dishai", weapon: "火炮", birth: "燕陵", story: "火炮专家，能造各种火炮，号称'宋朝天下第一炮手'。", favorite: false},
+{id: 53, name: "蒋敬", nickname: "神算子", rank: "地会星", avatar: "🧮", strength: 62, intelligence: 88, leadership: 68, loyalty: 90, category: "dishai", weapon: "无", birth: "潭州", story: "原为落科举子，精通书算，能'积万累千，纤毫不差'。", favorite: false},
+{id: 54, name: "吕方", nickname: "小温侯", rank: "地佐星", avatar: "🔱", strength: 83, intelligence: 70, leadership: 72, loyalty: 88, category: "dishai", weapon: "方天画戟", birth: "潭州", story: "因崇拜吕布而学使方天画戟，人称'小温侯'。", favorite: false},
+{id: 55, name: "郭盛", nickname: "赛仁贵", rank: "地佑星", avatar: "🏹", strength: 82, intelligence: 68, leadership: 70, loyalty: 86, category: "dishai", weapon: "方天戟", birth: "西川嘉陵", story: "因崇拜薛仁贵而学使方天画戟，与吕方是搭档。", favorite: false},
+{id: 56, name: "安道全", nickname: "神医", rank: "地灵星", avatar: "💊", strength: 58, intelligence: 90, leadership: 65, loyalty: 92, category: "dishai", weapon: "无", birth: "建康府", story: "神医，曾治愈宋江背疮，医术高明。", favorite: false},
+{id: 57, name: "皇甫端", nickname: "紫髯伯", rank: "地兽星", avatar: "🐎", strength: 65, intelligence: 82, leadership: 70, loyalty: 90, category: "dishai", weapon: "无", birth: "幽州", story: "兽医，善医马匹，因生得碧眼黄须得名。", favorite: false},
+{id: 58, name: "王英", nickname: "矮脚虎", rank: "地微星", avatar: "🐯", strength: 78, intelligence: 60, leadership: 65, loyalty: 80, category: "dishai", weapon: "长枪", birth: "两淮", story: "因身材矮小得名，原为清风山二寨主，好色但勇猛。", favorite: false},
+{id: 59, name: "扈三娘", nickname: "一丈青", rank: "地慧星", avatar: "🌸", strength: 86, intelligence: 75, leadership: 78, loyalty: 88, category: "dishai", weapon: "日月双刀", birth: "扈家庄", story: "梁山三位女将之一，武艺高强，使日月双刀，后嫁王英。", favorite: true},
+{id: 60, name: "鲍旭", nickname: "丧门神", rank: "地暴星", avatar: "☠️", strength: 87, intelligence: 62, leadership: 70, loyalty: 85, category: "dishai", weapon: "阔剑", birth: "寇州", story: "原为枯树山强人，生性凶悍，嗜杀成性。", favorite: false},
+{id: 61, name: "樊瑞", nickname: "混世魔王", rank: "地然星", avatar: "👹", strength: 82, intelligence: 85, leadership: 78, loyalty: 86, category: "dishai", weapon: "流星锤", birth: "濮州", story: "原为芒砀山寨主，精通法术，善使流星锤。", favorite: false},
+{id: 62, name: "孔明", nickname: "毛头星", rank: "地猖星", avatar: "⭐", strength: 80, intelligence: 70, leadership: 72, loyalty: 88, category: "dishai", weapon: "长枪", birth: "青州", story: "孔亮兄长，白虎山富户，因与同乡财主争财杀人逃亡。", favorite: false},
+{id: 63, name: "孔亮", nickname: "独火星", rank: "地狂星", avatar: "🔥", strength: 78, intelligence: 68, leadership: 70, loyalty: 86, category: "dishai", weapon: "长枪", birth: "青州", story: "孔明弟弟，与兄长一起上白虎山落草。", favorite: false},
+{id: 64, name: "项充", nickname: "八臂哪吒", rank: "地飞星", avatar: "🌀", strength: 83, intelligence: 72, leadership: 74, loyalty: 88, category: "dishai", weapon: "团牌、标枪", birth: "徐州沛县", story: "原为芒砀山副将，善使团牌、标枪，武艺高强。", favorite: false},
+{id: 65, name: "李衮", nickname: "飞天大圣", rank: "地走星", avatar: "🦇", strength: 82, intelligence: 70, leadership: 73, loyalty: 87, category: "dishai", weapon: "团牌、标枪", birth: "邳县", story: "原为芒砀山副将，与项充搭档，善使团牌、标枪。", favorite: false},
+{id: 66, name: "金大坚", nickname: "玉臂匠", rank: "地巧星", avatar: "🛠️", strength: 65, intelligence: 82, leadership: 68, loyalty: 90, category: "dishai", weapon: "无", birth: "济州", story: "金石雕刻家，善刻碑文、印章。", favorite: false},
+{id: 67, name: "马麟", nickname: "铁笛仙", rank: "地明星", avatar: "🎵", strength: 79, intelligence: 72, leadership: 70, loyalty: 88, category: "dishai", weapon: "大滚刀", birth: "建康府", story: "善吹铁笛，武艺不错，原为黄门山强人。", favorite: false},
+{id: 68, name: "童威", nickname: "出洞蛟", rank: "地进星", avatar: "🐉", strength: 78, intelligence: 70, leadership: 72, loyalty: 90, category: "dishai", weapon: "短刀", birth: "浔阳江", story: "李俊心腹，精通水性，善驾船。", favorite: false},
+{id: 69, name: "童猛", nickname: "翻江蜃", rank: "地退星", avatar: "🐚", strength: 77, intelligence: 68, leadership: 70, loyalty: 92, category: "dishai", weapon: "短刀", birth: "浔阳江", story: "童威弟弟，水性极好，与哥哥同为李俊心腹。", favorite: false},
+{id: 70, name: "孟康", nickname: "玉幡竿", rank: "地满星", avatar: "🚢", strength: 75, intelligence: 78, leadership: 72, loyalty: 90, category: "dishai", weapon: "无", birth: "真定州", story: "造船专家，因身材修长、皮肤白皙得名。", favorite: false},
+{id: 71, name: "侯健", nickname: "通臂猿", rank: "地遂星", avatar: "🦍", strength: 72, intelligence: 75, leadership: 68, loyalty: 88, category: "dishai", weapon: "针线", birth: "洪都", story: "裁缝，飞针走线，技艺高超，江湖人称'通臂猿'。", favorite: false},
+{id: 72, name: "陈达", nickname: "跳涧虎", rank: "地周星", avatar: "🐯", strength: 81, intelligence: 68, leadership: 72, loyalty: 86, category: "dishai", weapon: "长枪", birth: "邺城", story: "少华山三头领之一，因能跳过涧溪得名。", favorite: false},
+{id: 73, name: "杨春", nickname: "白花蛇", rank: "地隐星", avatar: "🐍", strength: 80, intelligence: 70, leadership: 71, loyalty: 88, category: "dishai", weapon: "大杆刀", birth: "解良", story: "少华山三头领之一，因行动敏捷如蛇得名。", favorite: false},
+{id: 74, name: "郑天寿", nickname: "白面郎君", rank: "地异星", avatar: "👱", strength: 79, intelligence: 70, leadership: 70, loyalty: 85, category: "dishai", weapon: "长枪", birth: "苏州", story: "原为清风山三寨主，因生得白净俊俏得名。", favorite: false},
+{id: 75, name: "陶宗旺", nickname: "九尾龟", rank: "地理星", avatar: "🐢", strength: 84, intelligence: 68, leadership: 72, loyalty: 90, category: "dishai", weapon: "铁锹", birth: "光州", story: "庄户出身，力大无比，善用铁锹。", favorite: false},
+{id: 76, name: "宋清", nickname: "铁扇子", rank: "地俊星", avatar: "🌬️", strength: 60, intelligence: 75, leadership: 65, loyalty: 95, category: "dishai", weapon: "无", birth: "郓城", story: "宋江弟弟，负责梁山宴席事宜。", favorite: false},
+{id: 77, name: "乐和", nickname: "铁叫子", rank: "地乐星", avatar: "🎤", strength: 65, intelligence: 80, leadership: 68, loyalty: 90, category: "dishai", weapon: "无", birth: "茅州", story: "聪明伶俐，各种乐曲一学便会，又有一副好嗓音。", favorite: false},
+{id: 78, name: "龚旺", nickname: "花项虎", rank: "地捷星", avatar: "🐯", strength: 81, intelligence: 66, leadership: 70, loyalty: 86, category: "dishai", weapon: "飞枪", birth: "东昌府", story: "浑身刺有虎斑，脖子上刺着虎头，善使飞枪。", favorite: false},
+{id: 79, name: "丁得孙", nickname: "中箭虎", rank: "地速星", avatar: "🐅", strength: 82, intelligence: 65, leadership: 71, loyalty: 85, category: "dishai", weapon: "飞叉", birth: "东昌府", story: "面颊连项都有疤痕，善使飞叉。", favorite: false},
+{id: 80, name: "穆春", nickname: "小遮拦", rank: "地镇星", avatar: "🛡️", strength: 76, intelligence: 68, leadership: 69, loyalty: 88, category: "dishai", weapon: "朴刀", birth: "揭阳镇", story: "穆弘弟弟，原为揭阳镇一霸，武艺不及哥哥。", favorite: false},
+{id: 81, name: "曹正", nickname: "操刀鬼", rank: "地羁星", avatar: "🔪", strength: 78, intelligence: 72, leadership: 70, loyalty: 90, category: "dishai", weapon: "屠刀", birth: "开封府", story: "屠户出身，林冲徒弟，善屠宰牲口。", favorite: false},
+{id: 82, name: "宋万", nickname: "云里金刚", rank: "地魔星", avatar: "👹", strength: 80, intelligence: 65, leadership: 72, loyalty: 88, category: "dishai", weapon: "长枪", birth: "梁山", story: "梁山早期头领之一，因身材高大得名。", favorite: false},
+{id: 83, name: "杜迁", nickname: "摸着天", rank: "地妖星", avatar: "☁️", strength: 79, intelligence: 64, leadership: 71, loyalty: 89, category: "dishai", weapon: "长枪", birth: "梁山", story: "梁山早期头领之一，因身材高大得名。", favorite: false},
+{id: 84, name: "薛永", nickname: "病大虫", rank: "地幽星", avatar: "🐅", strength: 78, intelligence: 70, leadership: 69, loyalty: 88, category: "dishai", weapon: "枪棒", birth: "河南洛阳", story: "江湖卖艺人，因祖父军官得罪同僚被牵连。", favorite: false},
+{id: 85, name: "施恩", nickname: "金眼彪", rank: "地伏星", avatar: "🐯", strength: 77, intelligence: 72, leadership: 70, loyalty: 90, category: "dishai", weapon: "无", birth: "孟州", story: "孟州牢城管营之子，曾开快活林酒店，与武松交好。", favorite: false},
+{id: 86, name: "李忠", nickname: "打虎将", rank: "地僻星", avatar: "🐅", strength: 79, intelligence: 66, leadership: 68, loyalty: 85, category: "dishai", weapon: "枪棒", birth: "濠州定远", story: "史进的开手师父，原为江湖卖艺人，吝啬但义气。", favorite: false},
+{id: 87, name: "周通", nickname: "小霸王", rank: "地空星", avatar: "🤴", strength: 78, intelligence: 64, leadership: 68, loyalty: 84, category: "dishai", weapon: "走水绿沉枪", birth: "桃花山", story: "桃花山大寨主，因仰慕项羽得名'小霸王'。", favorite: false},
+{id: 88, name: "汤隆", nickname: "金钱豹子", rank: "地孤星", avatar: "🐆", strength: 77, intelligence: 72, leadership: 70, loyalty: 90, category: "dishai", weapon: "铁锤", birth: "延安府", story: "铁匠，李逵表兄，善打兵器，浑身有麻点如金钱豹。", favorite: false},
+{id: 89, name: "杜兴", nickname: "鬼脸儿", rank: "地全星", avatar: "👺", strength: 75, intelligence: 74, leadership: 72, loyalty: 92, category: "dishai", weapon: "无", birth: "中山府", story: "李应管家，因相貌丑陋得名，但办事得力。", favorite: false},
+{id: 90, name: "邹渊", nickname: "出林龙", rank: "地短星", avatar: "🐉", strength: 79, intelligence: 68, leadership: 71, loyalty: 86, category: "dishai", weapon: "长枪", birth: "莱州", story: "邹润叔叔，原为登云山头领，性气高强。", favorite: false},
+{id: 91, name: "邹润", nickname: "独角龙", rank: "地角星", avatar: "🦏", strength: 81, intelligence: 66, leadership: 72, loyalty: 88, category: "dishai", weapon: "长枪", birth: "莱州", story: "邹渊侄子，脑后生一肉瘤，曾一头撞折松树。", favorite: false},
+{id: 92, name: "朱贵", nickname: "旱地忽律", rank: "地囚星", avatar: "🐊", strength: 73, intelligence: 78, leadership: 72, loyalty: 92, category: "dishai", weapon: "无", birth: "沂州", story: "梁山早期头领，负责南山酒店，探听消息。", favorite: false},
+{id: 93, name: "朱富", nickname: "笑面虎", rank: "地藏星", avatar: "😊", strength: 70, intelligence: 76, leadership: 68, loyalty: 94, category: "dishai", weapon: "无", birth: "沂州", story: "朱贵弟弟，李逵徒弟，在沂州开酒店。", favorite: false},
+{id: 94, name: "蔡福", nickname: "铁臂膊", rank: "地平星", avatar: "💪", strength: 76, intelligence: 75, leadership: 72, loyalty: 90, category: "dishai", weapon: "无", birth: "北京", story: "北京两院押狱兼行刑刽子手，与弟弟蔡庆搭档。", favorite: false},
+{id: 95, name: "蔡庆", nickname: "一枝花", rank: "地损星", avatar: "🌸", strength: 74, intelligence: 72, leadership: 70, loyalty: 92, category: "dishai", weapon: "无", birth: "北京", story: "蔡福弟弟，也是刽子手，爱在头上戴一枝花。", favorite: false},
+{id: 96, name: "李立", nickname: "催命判官", rank: "地奴星", avatar: "👨‍⚖️", strength: 77, intelligence: 70, leadership: 71, loyalty: 84, category: "dishai", weapon: "无", birth: "江州", story: "浔阳江边开黑店，与李俊是结义兄弟。", favorite: false},
+{id: 97, name: "李云", nickname: "青眼虎", rank: "地察星", avatar: "🐯", strength: 80, intelligence: 72, leadership: 74, loyalty: 88, category: "dishai", weapon: "朴刀", birth: "沂州", story: "原为沂水县都头，朱富师父，因双眼碧绿得名。", favorite: false},
+{id: 98, name: "焦挺", nickname: "没面目", rank: "地丑星", avatar: "🎭", strength: 82, intelligence: 65, leadership: 68, loyalty: 86, category: "dishai", weapon: "拳脚", birth: "中山府", story: "相扑高手，祖传三代相扑为生，到处投人不着。", favorite: false},
+{id: 99, name: "石勇", nickname: "石将军", rank: "地劣星", avatar: "🪨", strength: 78, intelligence: 66, leadership: 68, loyalty: 90, category: "dishai", weapon: "长枪", birth: "大名府", story: "原为大名府赌徒，因一拳打死人逃亡。", favorite: false},
+{id: 100, name: "孙新", nickname: "小尉迟", rank: "地数星", avatar: "🛡️", strength: 79, intelligence: 74, leadership: 72, loyalty: 92, category: "dishai", weapon: "长枪", birth: "琼州", story: "孙立弟弟，顾大嫂丈夫，在登州开酒店。", favorite: false},
+{id: 101, name: "顾大嫂", nickname: "母大虫", rank: "地阴星", avatar: "🐯", strength: 81, intelligence: 78, leadership: 76, loyalty: 94, category: "dishai", weapon: "双刀", birth: "登州", story: "孙新妻子，梁山三位女将之一，武艺高强，性情豪爽。", favorite: true},
+{id: 102, name: "张青", nickname: "菜园子", rank: "地刑星", avatar: "🥬", strength: 76, intelligence: 72, leadership: 70, loyalty: 90, category: "dishai", weapon: "无", birth: "孟州", story: "原在孟州道光明寺种菜，后与孙二娘开黑店。", favorite: false},
+{id: 103, name: "孙二娘", nickname: "母夜叉", rank: "地壮星", avatar: "👹", strength: 80, intelligence: 75, leadership: 74, loyalty: 92, category: "dishai", weapon: "双刀", birth: "孟州", story: "张青妻子，梁山三位女将之一，在十字坡开黑店卖人肉包子。", favorite: true},
+{id: 104, name: "王定六", nickname: "活闪婆", rank: "地健星", avatar: "⚡", strength: 74, intelligence: 70, leadership: 68, loyalty: 92, category: "dishai", weapon: "短刀", birth: "建康府", story: "因走跳得快得名，在建康府扬子江边卖酒度日。", favorite: false},
+{id: 105, name: "郁保四", nickname: "险道神", rank: "地耗星", avatar: "👻", strength: 84, intelligence: 65, leadership: 72, loyalty: 88, category: "dishai", weapon: "无", birth: "青州", story: "身高一丈，原是青州强盗，曾劫夺梁山马匹。", favorite: false},
+{id: 106, name: "白胜", nickname: "白日鼠", rank: "地贼星", avatar: "🐭", strength: 65, intelligence: 75, leadership: 60, loyalty: 80, category: "dishai", weapon: "无", birth: "济州", story: "原为闲汉，参与智取生辰纲，后上梁山。", favorite: false},
+{id: 107, name: "时迁", nickname: "鼓上蚤", rank: "地贼星", avatar: "🦗", strength: 70, intelligence: 85, leadership: 65, loyalty: 90, category: "dishai", weapon: "短刀", birth: "高唐州", story: "轻功了得，飞檐走壁，擅长偷盗，为梁山立下不少功劳。", favorite: false},
+{id: 108, name: "段景住", nickname: "金毛犬", rank: "地狗星", avatar: "🐕", strength: 68, intelligence: 72, leadership: 64, loyalty: 88, category: "dishai", weapon: "无", birth: "涿州", story: "盗马贼，因头发黄得名，曾盗得照夜玉狮子马献宋江。", favorite: false}
 ];
-
-// 为所有108位好汉填充数据（这里简化为添加更多数据）
-for (let i = 61; i <= 108; i++) {
-characters.push({
-id: i,
-name: `好汉${i}`,
-nickname: `绰号${i}`,
-rank: i <= 96 ? "地煞星" : "地煞星",
-avatar: i <= 96 ? "⭐" : "🌟",
-strength: 70 + Math.floor(Math.random() * 20),
-intelligence: 60 + Math.floor(Math.random() * 30),
-leadership: 65 + Math.floor(Math.random() * 25),
-loyalty: 75 + Math.floor(Math.random() * 20),
-category: "dishai",
-weapon: "朴刀",
-birth: "各地",
-story: `这是第${i}位梁山好汉的简要介绍。梁山好汉个个英雄豪杰，为民除害，替天行道。`,
-favorite: Math.random() > 0.8
-});
-}
 
 // 初始化页面
 document.addEventListener('DOMContentLoaded', function() {
@@ -764,37 +686,6 @@ function updateCounter(count) {
 document.getElementById('count').textContent = count;
 }
 
-// 获取人物图片URL
-function getCharacterImage(character) {
-// 如果有特定画像，使用特定画像
-if (characterImages[character.id]) {
-return characterImages[character.id];
-}
-
-// 否则根据类别使用默认画像
-if (character.category === 'tiangang') {
-return characterImages.default_tiangang;
-} else {
-return characterImages.default_dishai;
-}
-}
-
-// 图片加载失败时的处理
-function handleImageError(imgElement, character) {
-console.log(`图片加载失败: ${character.name}`);
-
-// 使用备用图片
-const randomBackup = backupImages[Math.floor(Math.random() * backupImages.length)];
-imgElement.src = randomBackup;
-imgElement.alt = `${character.name}画像`;
-
-// 如果备用图片也失败，显示emoji
-imgElement.onerror = function() {
-imgElement.style.display = 'none';
-imgElement.parentElement.innerHTML = character.avatar;
-};
-}
-
 // 渲染人物卡片
 function renderCharacters(charactersArray) {
 const grid = document.getElementById('charactersGrid');
@@ -827,14 +718,9 @@ card.style.animationDelay = `${index * 0.03}s`;
 // 根据是否为收藏添加星星图标
 const favoriteIcon = character.favorite ? '<i class="fas fa-star" style="color: #ffcc00; margin-left: 5px;"></i>' : '';
 
-// 获取图片URL
-const imageUrl = getCharacterImage(character);
-
 card.innerHTML = `
 <div class="card-header">
-<div class="character-avatar">
-<img src="${imageUrl}" alt="${character.name}画像" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='${character.avatar}'">
-</div>
+<div class="character-avatar">${character.avatar}</div>
 <div>
 <div class="character-name">${character.name} ${favoriteIcon}</div>
 <div class="character-nickname">${character.nickname}</div>
@@ -867,14 +753,6 @@ ${character.story}
 `;
 
 grid.appendChild(card);
-
-// 为图片添加错误处理
-const img = card.querySelector('img');
-if (img) {
-img.addEventListener('error', function() {
-handleImageError(this, character);
-});
-}
 });
 
 // 重新绑定卡片点击事件
@@ -995,13 +873,8 @@ const content = document.getElementById('detailContent');
 // 根据是否为收藏添加星星图标
 const favoriteIcon = character.favorite ? '<i class="fas fa-star" style="color: #ffcc00;"></i>' : '';
 
-// 获取图片URL
-const imageUrl = getCharacterImage(character);
-
 content.innerHTML = `
-<div class="detail-avatar">
-<img src="${imageUrl}" alt="${character.name}画像" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'font-size: 5rem;\'>${character.avatar}</div>'">
-</div>
+<div class="detail-avatar">${character.avatar}</div>
 <div class="detail-name">${character.name} ${favoriteIcon}</div>
 <div class="detail-nickname">${character.nickname} · ${character.rank}</div>
 
@@ -1064,15 +937,6 @@ ${character.favorite ? '取消收藏' : '收藏这位好汉'}
 </button>
 </div>
 `;
-
-// 为详情面板图片添加错误处理
-const detailImg = content.querySelector('img');
-if (detailImg) {
-detailImg.addEventListener('error', function() {
-this.style.display = 'none';
-this.parentElement.innerHTML = `<div style="font-size: 5rem; display: flex; align-items: center; justify-content: center; height: 100%;">${character.avatar}</div>`;
-});
-}
 
 // 添加收藏切换功能
 document.getElementById('toggleFavorite').addEventListener('click', function() {
